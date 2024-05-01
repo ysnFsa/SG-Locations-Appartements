@@ -32,7 +32,7 @@ public class PCards extends RoundJPanel {
     private void initComponents() {
 
         jPanel1 = new RoundedPanel(30);
-        jLabel1 =  new RoundedLabel("/home/yassin/Documents/appr.jpg", 30,false);
+        jLabel1 =  new RoundedLabel("/icons/appr.jpg", 30,false , true);
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -44,14 +44,18 @@ public class PCards extends RoundJPanel {
 
         jLabel1.setIconTextGap(0);
 
+        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel2.setText("Prix:300DH");
         jLabel2.setIconTextGap(1);
 
+        jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel3.setText("Surface:100m²");
 
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel4.setText("chambre:3");
         jLabel4.setIconTextGap(1);
 
+        jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel5.setText("Ville: Agadir");
         jLabel5.setIconTextGap(1);
 
@@ -61,7 +65,7 @@ public class PCards extends RoundJPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -72,7 +76,7 @@ public class PCards extends RoundJPanel {
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(16, 16, 16)
                     .addComponent(jLabel5)
-                    .addContainerGap(242, Short.MAX_VALUE)))
+                    .addContainerGap(233, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,7 +91,7 @@ public class PCards extends RoundJPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(232, Short.MAX_VALUE)
+                    .addContainerGap(231, Short.MAX_VALUE)
                     .addComponent(jLabel5)
                     .addContainerGap()))
         );

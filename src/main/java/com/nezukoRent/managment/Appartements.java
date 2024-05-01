@@ -4,16 +4,15 @@
  */
 package com.nezukoRent.managment;
 
-import ui.customcomponents.CardPanel;
 import ui.customcomponents.PCards;
-import java.awt.CardLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -24,9 +23,11 @@ public class Appartements extends javax.swing.JPanel {
     /**
      * Creates new form Appartements
      */
-     private NewJFrame frame;
-    public Appartements(NewJFrame frame) {
-        this.frame=frame;
+     private Login LoginFrame;
+    public Appartements(Login LoginFrame) {
+        this.LoginFrame=LoginFrame;
+        AdjustFrame();
+
         initComponents();
          jPanel4.setLayout(new GridLayout(0, 3,30, 30)); 
         jPanel4.removeAll();  
@@ -331,22 +332,20 @@ public class Appartements extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        ShowSettings(LoginFrame);
 
-        jPanel4.setLayout(new GridLayout(0, 3,30, 30)); 
-        jPanel4.removeAll();  
-        addCardsToGrid(jPanel4);  
-        
-        jPanel4.revalidate();
-        jPanel4.repaint();
-        //scrollPane.setViewportView(jPanel4);
-
-        //scrollPane.revalidate();
-        //scrollPane.repaint();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-
-public void addCardsToGrid(JPanel panel) {
+public static void ShowSettings(JFrame frame){
+       Settings setting = new Settings();
+     JDialog overlayDialog = new JDialog(frame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(setting);
+     overlayDialog.setSize(600, 600);
+     overlayDialog.setLocationRelativeTo(frame);
+     overlayDialog.setVisible(true);
+}
+public static void addCardsToGrid(JPanel panel) {
     panel.removeAll(); 
 
     for (int i = 0; i < 109; i++) { 
@@ -362,7 +361,12 @@ public void addCardsToGrid(JPanel panel) {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-
+  ListAppartements AprList = new ListAppartements();
+     JDialog overlayDialog = new JDialog(LoginFrame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(AprList);
+     overlayDialog.setSize(900, 600);
+     overlayDialog.setLocationRelativeTo(LoginFrame);
+     overlayDialog.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -379,12 +383,17 @@ public void addCardsToGrid(JPanel panel) {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-                   AddAppartement addApcard = new AddAppartement(this.frame);
-                   this.frame.addPanel(addApcard, "addApp");
-                   this.frame.showPanel("addApp");
+                   AddAppartement addApcard = new AddAppartement(this.LoginFrame);
+                   this.LoginFrame.addPanel(addApcard, "addApp");
+                   this.LoginFrame.showPanel("addApp");
             
     }//GEN-LAST:event_jButton6ActionPerformed
 
+   public void AdjustFrame(){
+        this.LoginFrame.setResizable(true);
+        this.LoginFrame.AdjustSize(1400, 800);
+        this.LoginFrame.setLocationRelativeTo(null);
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

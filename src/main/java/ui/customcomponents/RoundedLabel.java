@@ -6,20 +6,38 @@ import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class RoundedLabel extends JLabel {
     private BufferedImage image;
     private int radius; 
-    private boolean roundAllCorners; 
+    private boolean roundAllCorners;
 
-    public RoundedLabel(String imagePath, int radius, boolean roundAllCorners) {
+    /**
+     * Constructor for RoundedLabel.
+     * @param imagePath Path to the image or resource name ex : Resource : /icons/img.png ; Fullpath : /home/yassin/img.png
+     * @param radius Radius for rounded corners
+     * @param roundAllCorners If true round all corners...if false only top
+     * @param fromResource If true load from resources if false  load from file system.
+     */
+    public RoundedLabel(String imagePath, int radius, boolean roundAllCorners, boolean fromResource) {
         this.radius = radius;
         this.roundAllCorners = roundAllCorners;
         try {
-            image = ImageIO.read(new File(imagePath)); 
+            if (fromResource) {
+            
+                InputStream is = getClass().getResourceAsStream(imagePath);
+                if (is != null) {
+                    image = ImageIO.read(is);
+                } else {
+                    System.out.println("Resource not found: " + imagePath);
+                }
+            } else {
+                image = ImageIO.read(new File(imagePath));
+            }
         } catch (Exception e) {
-           System.out.println("heyyyyyyyy");
+            System.out.println("Error loading image: " + e.getMessage());
         }
         setOpaque(false);
     }
@@ -37,9 +55,9 @@ public class RoundedLabel extends JLabel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-   
         if (image != null && (image.getWidth() != getWidth() || image.getHeight() != getHeight())) {
             image = resizeImage(image, getWidth(), getHeight());
+           //  image = resizeImage(image, 300, 300);
         }
 
         Graphics2D g2d = (Graphics2D) g.create();
@@ -47,9 +65,7 @@ public class RoundedLabel extends JLabel {
 
         Area area;
         if (roundAllCorners) {
-         
-            RoundRectangle2D roundedRectangle = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
-            area = new Area(roundedRectangle);
+            area = new Area(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius));
         } else {
             RoundRectangle2D roundedTop = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
             Rectangle bottomRect = new Rectangle(0, getHeight() - radius / 2, getWidth(), radius / 2);
@@ -58,8 +74,6 @@ public class RoundedLabel extends JLabel {
         }
 
         g2d.setClip(area);
-
-      
         g2d.drawImage(image, 0, 0, this);
         g2d.setColor(getForeground());
         g2d.setFont(getFont());
@@ -67,7 +81,6 @@ public class RoundedLabel extends JLabel {
         int x = (getWidth() - fm.stringWidth(getText())) / 2;
         int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
         g2d.drawString(getText(), x, y);
-
         g2d.dispose();
     }
 }
