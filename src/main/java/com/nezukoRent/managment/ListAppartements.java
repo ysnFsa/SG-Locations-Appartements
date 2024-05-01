@@ -4,7 +4,10 @@
  */
 package com.nezukoRent.managment;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  *
@@ -98,6 +101,7 @@ public class ListAppartements extends javax.swing.JPanel {
         );
 
         jPanel7.setBackground(new java.awt.Color(223, 223, 223));
+        jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -113,10 +117,12 @@ public class ListAppartements extends javax.swing.JPanel {
         jPanel7.setLayout(new GridLayout(0, 2,30, 30));
 
         jPanel7.removeAll();
-        Appartements.addCardsToGrid(jPanel7);
+        Appartements.addCardsToGrid(jPanel7 , true);
 
         jPanel7.revalidate();
         jPanel7.repaint();
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         jScrollPane1.setViewportView(jPanel7);
 
@@ -141,6 +147,15 @@ public class ListAppartements extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane1.setAutoscrolls(true);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(126, 216));
     }// </editor-fold>//GEN-END:initComponents
 
 

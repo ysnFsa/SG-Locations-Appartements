@@ -5,6 +5,7 @@
 package com.nezukoRent.managment;
 
 import ui.customcomponents.PCards;
+
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -31,7 +32,7 @@ public class Appartements extends javax.swing.JPanel {
         initComponents();
          jPanel4.setLayout(new GridLayout(0, 3,30, 30)); 
         jPanel4.removeAll();  
-        addCardsToGrid(jPanel4);  
+        addCardsToGrid(jPanel4 , false);  
         
         jPanel4.revalidate();
         jPanel4.repaint();
@@ -55,6 +56,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         panel1 = new java.awt.Panel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -67,7 +69,7 @@ public class Appartements extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(223, 223, 223));
+        jPanel1.setBackground(new java.awt.Color(237, 241, 244));
 
         jTextField1.setText("jTextField1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +94,7 @@ public class Appartements extends javax.swing.JPanel {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(223, 223, 223));
+        jPanel2.setBackground(new java.awt.Color(237, 241, 244));
         jPanel2.setPreferredSize(new java.awt.Dimension(516, 70));
 
         jButton1.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -124,18 +126,30 @@ public class Appartements extends javax.swing.JPanel {
             }
         });
 
+        jButton7.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/baseline_keyboard_arrow_right_24px.png"))); // NOI18N
+        jButton7.setBorderPainted(false);
+        jButton7.setContentAreaFilled(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
                 .addComponent(jButton4)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +158,8 @@ public class Appartements extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -154,6 +169,12 @@ public class Appartements extends javax.swing.JPanel {
         jButton1.setFocusPainted(false);
         jButton4.setBorder(BorderFactory.createEmptyBorder());
         jButton5.setBorder(BorderFactory.createEmptyBorder());
+        jButton1.setBorder(BorderFactory.createEmptyBorder());
+
+        jButton1.setContentAreaFilled(false);
+        jButton1.setFocusPainted(false);
+
+        panel1.setBackground(new java.awt.Color(237, 241, 244));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -231,7 +252,7 @@ public class Appartements extends javax.swing.JPanel {
         // Code adding the component to the parent container - not shown here
         jScrollPane1.setViewportView(jPanel4);  // Replace 'yourPanelWithCards' with the actual variable name of your JPanel
 
-        jPanel4.setBackground(new java.awt.Color(223, 223, 223));
+        jPanel4.setBackground(new java.awt.Color(237, 241, 244));
         // Assuming you have a method or location to add this scrollPane to the parent container
 
         // Assuming scrollPane is your JScrollPane instance
@@ -345,11 +366,11 @@ public static void ShowSettings(JFrame frame){
      overlayDialog.setLocationRelativeTo(frame);
      overlayDialog.setVisible(true);
 }
-public static void addCardsToGrid(JPanel panel) {
+public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
     panel.removeAll(); 
 
     for (int i = 0; i < 109; i++) { 
-        PCards card = new PCards();
+        PCards card = new PCards(isListCard);
     
         panel.add(card);
     }
@@ -361,12 +382,16 @@ public static void addCardsToGrid(JPanel panel) {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-  ListAppartements AprList = new ListAppartements();
+  /*ListAppartements AprList = new ListAppartements();
      JDialog overlayDialog = new JDialog(LoginFrame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(AprList);
      overlayDialog.setSize(900, 600);
      overlayDialog.setLocationRelativeTo(LoginFrame);
-     overlayDialog.setVisible(true);
+     overlayDialog.setVisible(true);*/
+     
+       History addApcard = new History(this.LoginFrame);
+                   this.LoginFrame.addPanel(addApcard, "dd");
+                   this.LoginFrame.showPanel("dd");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -389,6 +414,10 @@ public static void addCardsToGrid(JPanel panel) {
             
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
    public void AdjustFrame(){
         this.LoginFrame.setResizable(true);
         this.LoginFrame.AdjustSize(1400, 800);
@@ -403,6 +432,7 @@ public static void addCardsToGrid(JPanel panel) {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;

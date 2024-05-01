@@ -199,6 +199,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);&#xa;&#xa;jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);&#xa; jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));&#xa;        jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));&#xa;jScrollPane1.setAutoscrolls(true);&#xa;jScrollPane1.getVerticalScrollBar().setUnitIncrement(16); &#xa;jScrollPane1.setMinimumSize(new java.awt.Dimension(126, 216));"/>
+      </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
@@ -207,9 +210,14 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="df" green="df" red="df" type="rgb"/>
             </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="jPanel7.setLayout(new GridLayout(0, 2,30, 30));&#xa;&#xa;  jPanel7.removeAll();  &#xa;  Appartements.addCardsToGrid(jPanel7);  &#xa;        &#xa;        jPanel7.revalidate();&#xa;        jPanel7.repaint();"/>
+            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="jPanel7.setLayout(new GridLayout(0, 2,30, 30));&#xa;&#xa;  jPanel7.removeAll();  &#xa;  Appartements.addCardsToGrid(jPanel7 , true);  &#xa;        &#xa;        jPanel7.revalidate();&#xa;        jPanel7.repaint();&#xa;jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);&#xa;jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);"/>
           </AuxValues>
 
           <Layout>
