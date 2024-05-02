@@ -16,6 +16,7 @@ import java.awt.Component;
 import ui.customcomponents.RoundedButton;
 
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -23,12 +24,15 @@ import javax.swing.JOptionPane;
 
 public class Quartier extends javax.swing.JPanel {
  DefaultListModel<QuartierData> model = new DefaultListModel<>();
+ 
     /**
      * Creates new form Quartier
      */
     public Quartier() {
         initComponents();
-          RenderJlist();
+          renderQuartiers();
+          populateVillesComboBox();
+          displayQuartiers();
     }
 
     /**
@@ -46,14 +50,17 @@ public class Quartier extends javax.swing.JPanel {
         jList1 = new javax.swing.JList<>();
         jButton1 = new RoundedButton("" , 30);
         jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton3 = new RoundedButton("" , 30);
         jButton2 = new RoundedButton("" , 30);
 
         setBackground(new java.awt.Color(237, 241, 244));
 
-        jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel1.setText("Quartier");
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -61,6 +68,7 @@ public class Quartier extends javax.swing.JPanel {
         });
 
         jScrollPane1.setViewportView(jList1);
+        displayQuartiers();
 
         jButton1.setBackground(new java.awt.Color(109, 145, 129));
         jButton1.setFont(new java.awt.Font("Meera", 1, 18)); // NOI18N
@@ -74,10 +82,37 @@ public class Quartier extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(237, 241, 244));
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 52, Short.MAX_VALUE)
+        );
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel2.setText("Ville");
+
+        jComboBox1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         jButton3.setBackground(new java.awt.Color(255, 68, 121));
         jButton3.setFont(new java.awt.Font("Meera", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Effacer tout");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(109, 181, 154));
         jButton2.setFont(new java.awt.Font("Meera", 1, 18)); // NOI18N
@@ -89,57 +124,65 @@ public class Quartier extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jButton2)
-                .addGap(47, 47, 47)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton3))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -149,32 +192,67 @@ public class Quartier extends javax.swing.JPanel {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+// Method to populate the JComboBox with the names of the villes
+private void populateVillesComboBox() {
+    // Retrieve the list of villes
+    List<VilleData> villes = VilleTableHandler.getAllVilles();
+
+    // Create a DefaultComboBoxModel and populate it with the names of the villes
+    DefaultComboBoxModel<String> villeComboBoxModel = new DefaultComboBoxModel<>();
+    for (VilleData ville : villes) {
+        villeComboBoxModel.addElement(ville.getName());
+    }
+
+    // Set the populated DefaultComboBoxModel as the model for your JComboBox
+    jComboBox1.setModel(villeComboBoxModel);
+}
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-              String quartierName = jTextField1.getText().trim(); 
+        System.out.println("Button 1 clicked."); // Debugging statement
+        String quartierName = jTextField1.getText().trim();
 
-            if (!quartierName.isEmpty()) {
-               int id= QuartierTableHandler.addQuartier(quartierName);
-            
-                if (id != -1) {
-              
-                    QuartierData newQuartier = new QuartierData(id, quartierName);
-                    model.addElement(newQuartier);  
-                    jList1.ensureIndexIsVisible(model.getSize() - 1); 
-                    jTextField1.setText(""); 
-                } else {
-                  
-                    JOptionPane.showMessageDialog(null, "Failed to add new Quartier.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
+    if (!quartierName.isEmpty()) {
+        String selectedVilleName = (String) jComboBox1.getSelectedItem();
         
-                JOptionPane.showMessageDialog(null, "Quartier name cannot be empty.", "Warning", JOptionPane.WARNING_MESSAGE);
+        // Debugging statement to print selected Ville name
+        System.out.println("Selected Ville: " + selectedVilleName);
+        
+        VilleData selectedVille = null;
+        List<VilleData> villes = VilleTableHandler.getAllVilles();
+        for (VilleData ville : villes) {
+            if (ville.getName().equals(selectedVilleName)) {
+                selectedVille = ville;
+                break;
             }
+        }
+
+        if (selectedVille != null) {
+            int id = QuartierTableHandler.addQuartier(quartierName, selectedVille.getId());
+            
+            // Debugging statement to print the generated id
+            System.out.println("Generated Quartier ID: " + id);
+            
+            if (id != -1) {
+                // Create a new QuartierData object with the generated id, quartier name, and id_ville
+                QuartierData newQuartier = new QuartierData(id, quartierName, selectedVille.getId());
+                
+                model.addElement(newQuartier);
+                jList1.ensureIndexIsVisible(model.getSize() - 1);
+                jTextField1.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to add new Quartier.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a ville.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Quartier name cannot be empty.", "Warning", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        if (!model.isEmpty()) {
            int selectedIndex = jList1.getSelectedIndex();
             if (selectedIndex != -1) {
                 QuartierData selectedQuartier = model.getElementAt(selectedIndex);
@@ -187,30 +265,75 @@ public class Quartier extends javax.swing.JPanel {
                 }
             } else {
                
-                JOptionPane.showMessageDialog(null, "Please select a Ville to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please select a Quartier to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-private void RenderJlist(){
-
-       jList1.setCellRenderer(new DefaultListCellRenderer() {
-    @Override
-    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        if (value instanceof VilleData) {
-            setText(((VilleData) value).getName());
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to clear table Quartier?", "Confirmation", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+        
+        if( QuartierTableHandler.ClearQuartier()){
+            JOptionPane.showMessageDialog(null, "Quartier deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE); 
+            model.clear();
+        }else{
+         JOptionPane.showMessageDialog(null, "Failed to clear table Quartier.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        return this;
+        
+       }
+      
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+
+
+private void displayQuartiers() {
+    try {
+        List<QuartierData> quartiers = QuartierTableHandler.getAllQuartiers(); 
+        model.clear();
+        
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (QuartierData quartier : quartiers) {
+            model.addElement(quartier.getName()); 
+        }
+        
+        jList1.setModel(model);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading quartiers: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-});
 }
+
+private void renderQuartiers() {
+    
+    jList1.setCellRenderer(new DefaultListCellRenderer() {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value instanceof QuartierData) {
+                setText(((QuartierData) value).getName());
+            }
+            return this;
+        }
+    });
+}
+
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<VilleData> jList1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;

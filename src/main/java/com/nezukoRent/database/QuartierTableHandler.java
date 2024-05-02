@@ -21,13 +21,15 @@ import java.util.List;
 public class QuartierTableHandler {
 
     // Method to create the QuartierData table if it doesn't exist
-    public static void createTable() {
-        if(!DBConnect.checkTableExists("Quartier")){
-             String sql = "CREATE TABLE IF NOT EXISTS Quartier (\n"
-                   + " id integer PRIMARY KEY,\n"
-                   + " name text NOT NULL\n"
-                   + ");";
-        
+   public static void createTable() {
+    if(!DBConnect.checkTableExists("Quartier")){
+        String sql = "CREATE TABLE IF NOT EXISTS Quartier (\n"
+               + " id integer PRIMARY KEY,\n"
+               + " name text NOT NULL,\n"
+               + " id_ville INTEGER,\n" 
+               + " FOREIGN KEY (id_ville) REFERENCES Ville(id)\n" 
+               + ");";
+    
         try (Connection conn = DBConnect.connect();
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
@@ -35,9 +37,9 @@ public class QuartierTableHandler {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        }
-   
     }
+}
+
 
     private static boolean isTableEmpty(Connection conn) throws SQLException {
         String sqlCheck = "SELECT count(*) AS count FROM Quartier;";
@@ -52,31 +54,33 @@ public class QuartierTableHandler {
 
 
   public static boolean deleteQuartier(int id) {
-        String sql = "DELETE FROM Quartier WHERE id = ?";
-        try (Connection conn = DBConnect.connect(); 
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0; 
-        } catch (SQLException e) {
-            System.out.println("Err deleting Quartier: " + e.getMessage());
-            return false; 
-        }
+    String sql = "DELETE FROM Quartier WHERE id = ?";
+    try (Connection conn = DBConnect.connect(); 
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setInt(1, id);
+        int affectedRows = pstmt.executeUpdate();
+        return affectedRows > 0; 
+    } catch (SQLException e) {
+        System.out.println("Err deleting Quartier: " + e.getMessage());
+        return false; 
     }
-public static int addQuartier(String name) {
+}
+
+public static int addQuartier(String name, int id_ville) {
     int quartierId = -1; // Default value indicating failure
-    String sql = "INSERT INTO Quartier (name) VALUES (?);";
+    String sql = "INSERT INTO Quartier (name, id_ville) VALUES (?, ?);"; // Updated SQL query
+    
     try (Connection conn = DBConnect.connect();
          PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-        pstmt.setString(1, name);
+        pstmt.setString(1, name); // Set the quartier name
+        pstmt.setInt(2, id_ville); // Set the id_ville
+        
         int rowsAffected = pstmt.executeUpdate();
         if (rowsAffected == 1) {
-          
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 quartierId = rs.getInt(1); 
             }
-            
         }
     } catch (SQLException e) {
         System.out.println(e.getMessage());
@@ -84,36 +88,66 @@ public static int addQuartier(String name) {
     return quartierId;
 }
 
+
    
     public static boolean checkQuartierExists(String name) {
-        String sql = "SELECT id FROM Quartier WHERE name = ?";
-        try (Connection conn =  DBConnect.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+    String sql = "SELECT id FROM Quartier WHERE name = ?";
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, name);
+        try (ResultSet rs = pstmt.executeQuery()) {
+            return rs.next();
         }
-        return false;
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
     }
+    return false;
+}
+
     
     public static List<QuartierData> getAllQuartiers() {
-        String sql = "SELECT id, name FROM Quartier";
-        List<QuartierData> quartiers = new ArrayList<>();
-        try (Connection conn = DBConnect.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+    String sql = "SELECT id, name, id_ville FROM Quartier"; 
+    List<QuartierData> quartiers = new ArrayList<>();
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                quartiers.add(new QuartierData(id, name));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error fetching quartiers: " + e.getMessage());
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            int id_ville = rs.getInt("id_ville"); 
+            quartiers.add(new QuartierData(id, name, id_ville)); 
         }
-        return quartiers;
+    } catch (SQLException e) {
+        System.out.println("Error fetching quartiers: " + e.getMessage());
     }
+    return quartiers;
+}
+
+    public static boolean ClearQuartier() {
+        String sql = "DELETE FROM Quartier ";
+        try (Connection conn = DBConnect.connect(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+         
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0; 
+        } catch (SQLException e) {
+            System.out.println("Err Clearing table Quartier: " + e.getMessage());
+            return false; 
+        }
+    }
+    
+    public static void DropTable(){
+      String sql = "DROP TABLE Quartier;";
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+   
+        pstmt.executeUpdate();
+      
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+  }
+
+
 }
