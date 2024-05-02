@@ -1,7 +1,10 @@
 package com.nezukoRent.managment;
 
 
+import com.nezukoRent.database.SetupDB;
+import com.nezukoRent.database.AdminTableHandler;
 import ui.customcomponents.RoundedButton;
+
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import ui.customcomponents.MyPasswordField;
@@ -25,6 +28,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
          this.setLocationRelativeTo(null);
+          jTextField1.setText("");
     }
 
     /**
@@ -127,12 +131,24 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-   
-           
-        Appartements panelOne = new Appartements(this);
+     
+           String Uname= "admin";//jTextField1.getText();
+           String passwd="admin"; // jPasswordField1.getText();
+            System.out.println("uname : " +jTextField1.getText() );
+           System.out.println("passwd : " +passwd );
+          if( AdminTableHandler.checkLogin(Uname , passwd)){
+              System.out.println("logged in");
+            Appartements panelOne = new Appartements(this);
         jPanel1.add(panelOne, "Home");
         CardLayout cardLayout = (CardLayout) jPanel1.getLayout();
         cardLayout.show(jPanel1, "Home");
+          
+          }else{
+               System.out.println("wrong login");
+              jTextField1.setText("");
+              jPasswordField1.setText("");
+          }
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -189,6 +205,9 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                new Login().setVisible(true);
+              
+              SetupDB.Setup();
+              
             }
         });
     }

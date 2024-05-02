@@ -8,7 +8,10 @@ import ui.customcomponents.RoundedTextField;
 import ui.customcomponents.RoundedLabel;
 import ui.customcomponents.RoundedButton;
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -70,6 +73,8 @@ public class AddAppartement extends javax.swing.JPanel {
         jLabel11 = new RoundedLabel("/home/yassin/Desktop/cours/s6/mobile/ADD1.png", 30 , true , false);
         jPanel4 = new javax.swing.JPanel();
         jButton3 = new RoundedButton("" , 30);
+        jLabel10 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(237, 241, 244));
         setPreferredSize(new java.awt.Dimension(984, 406));
@@ -135,11 +140,12 @@ public class AddAppartement extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -338,6 +344,22 @@ public class AddAppartement extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(20, 370, 25, 393);
         jPanel4.add(jButton3, gridBagConstraints);
 
+        jLabel10.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel10.setText("Gérer Quartiers");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+
+        jLabel16.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel16.setText("Gérer Villes");
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel16MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -359,12 +381,23 @@ public class AddAppartement extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 492, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel10)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel16)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel16)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -418,6 +451,32 @@ public class AddAppartement extends javax.swing.JPanel {
                    this.LoginFrame.showPanel("Home");
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+        
+     
+       Quartier quartier = new Quartier();
+     JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Quartiers", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(quartier);
+     overlayDialog.setSize(400, 450);
+     overlayDialog.setResizable(false);
+     overlayDialog.setLocationRelativeTo(this.LoginFrame);
+     overlayDialog.setVisible(true);
+
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+        // TODO add your handling code here:
+            Ville ville = new Ville();
+     JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Villes", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(ville);
+     overlayDialog.setSize(400, 450);
+     overlayDialog.setResizable(false);
+     overlayDialog.setLocationRelativeTo(this.LoginFrame);
+     overlayDialog.setVisible(true);
+        
+    }//GEN-LAST:event_jLabel16MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -433,11 +492,13 @@ public class AddAppartement extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
