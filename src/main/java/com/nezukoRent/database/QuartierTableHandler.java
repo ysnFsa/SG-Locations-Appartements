@@ -146,6 +146,28 @@ public static int addQuartier(String name, int id_ville) {
         System.out.println(e.getMessage());
     }
   }
+    
+    public static List<QuartierData> getQuartiersByVille(int villeId) {
+    String sql = "SELECT id, name, id_ville FROM Quartier WHERE id_ville = ?"; 
+    List<QuartierData> quartiers = new ArrayList<>();
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setInt(1, villeId); // Set the city ID parameter
+         
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int id_ville = rs.getInt("id_ville"); 
+                quartiers.add(new QuartierData(id, name, id_ville)); 
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching quartiers by ville: " + e.getMessage());
+    }
+    return quartiers;
+}
+
 
 
 }

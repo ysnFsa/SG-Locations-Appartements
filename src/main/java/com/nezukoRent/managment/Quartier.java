@@ -14,7 +14,6 @@ import com.nezukoRent.database.VilleData;
 import com.nezukoRent.database.VilleTableHandler;
 import java.awt.Component;
 import ui.customcomponents.RoundedButton;
-
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -191,18 +190,16 @@ public class Quartier extends javax.swing.JPanel {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-// Method to populate the JComboBox with the names of the villes
+
 private void populateVillesComboBox() {
-    // Retrieve the list of villes
+    
     List<VilleData> villes = VilleTableHandler.getAllVilles();
 
-    // Create a DefaultComboBoxModel and populate it with the names of the villes
     DefaultComboBoxModel<String> villeComboBoxModel = new DefaultComboBoxModel<>();
     for (VilleData ville : villes) {
         villeComboBoxModel.addElement(ville.getName());
     }
 
-    // Set the populated DefaultComboBoxModel as the model for your JComboBox
     jComboBox1.setModel(villeComboBoxModel);
 }
 
@@ -286,43 +283,33 @@ private void populateVillesComboBox() {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        displayQuartiers();
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
-
-/*
+    
 private void displayQuartiers() {
     try {
-        List<QuartierData> quartiers = QuartierTableHandler.getAllQuartiers(); 
-        model.clear();
+        String selectedVilleName = (String) jComboBox1.getSelectedItem();
+        VilleData selectedVille = null;
         
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (QuartierData quartier : quartiers) {
-            model.addElement(quartier.getName()); 
+        List<VilleData> villes = VilleTableHandler.getAllVilles();
+        for (VilleData ville : villes) {
+            if (ville.getName().equals(selectedVilleName)) {
+                selectedVille = ville;
+                break;
+            }
         }
-        
-        jList1.setModel(model);
 
+        if (selectedVille != null) {
+            List<QuartierData> quartiers = QuartierTableHandler.getQuartiersByVille(selectedVille.getId());
+            model.clear();
+            for (QuartierData quartier : quartiers) {
+                model.addElement(quartier);
+            }
+            jList1.setModel(model);
+        }
     } catch (Exception e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error loading quartiers: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}*/
-    
-private void displayQuartiers() {
-    
-    try {
-        List<QuartierData> villes = QuartierTableHandler.getAllQuartiers(); 
-        model.clear(); 
-
-        for (QuartierData ville : villes) {
-            System.out.println("ville : "+ville.getName() + " : "+ville.getId());
-            model.addElement(ville); 
-        }
-
-        jList1.setModel(model);
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error loading cities: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
 private void renderQuartiers() {
