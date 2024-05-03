@@ -147,6 +147,49 @@ public static int addQuartier(String name, int id_ville) {
     }
   }
     
+
+       
+       public static int getQuartierId(String name , int id) {
+    String sql = "SELECT id FROM Quartier WHERE name = ? and id_ville=?;";
+    int Qid = -1; // Initialize with an empty string in case no result is found
+    
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, name);
+         pstmt.setInt(2, id);
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                Qid = rs.getInt("id");
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+    return Qid;
+}
+       
+              
+       public static String getQuartierId( int id) {
+    String sql = "SELECT name FROM Quartier WHERE id = ?";
+     //System.out.println("**********id : "+id);
+    String name = "";
+    
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+       
+         pstmt.setInt(1, id);
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                name = rs.getString("name");
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+    return name;
+}
+
+    
     public static List<QuartierData> getQuartiersByVille(int villeId) {
     String sql = "SELECT id, name, id_ville FROM Quartier WHERE id_ville = ?"; 
     List<QuartierData> quartiers = new ArrayList<>();

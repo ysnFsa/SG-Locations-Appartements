@@ -4,7 +4,12 @@
  */
 package ui.customcomponents;
 
+import com.nezukoRent.database.AppartementData;
+import com.nezukoRent.managment.AddAppartement;
+import com.nezukoRent.managment.Login;
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 /**
  *
  * @author yassin
@@ -15,13 +20,25 @@ public class PCards extends RoundJPanel {
      * Creates new form PCards
      */
     private boolean isListCard;
-    public PCards(boolean isListCard) {
+    public PCards(boolean isListCard ) {
         
         super(30);
         this.isListCard=isListCard;
         
         initComponents();
         initListCard();
+     
+    }
+    
+    
+       public PCards(boolean isListCard , AppartementData appartement , Login loginFrame ) {
+        
+        super(30);
+        this.isListCard=isListCard;
+        
+        initComponents();
+        initListCard();
+        addOnmouseClickedevent(appartement,loginFrame);
      
     }
 
@@ -38,12 +55,17 @@ public class PCards extends RoundJPanel {
         jLabel1 =  new RoundedLabel("/icons/appr.jpg", 30,false , true);
         jPanel2 = new RoundedPanel(30);
         jPanel3 = new RoundedPanel(30);
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        prixLabel = new javax.swing.JLabel();
+        surfaceLabel = new javax.swing.JLabel();
+        chambreLabel = new javax.swing.JLabel();
+        villeLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(228, 211, 231));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 214, 237));
@@ -55,21 +77,21 @@ public class PCards extends RoundJPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 214, 237));
 
-        jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
-        jLabel6.setText("Prix:300DH");
-        jLabel6.setIconTextGap(1);
+        prixLabel.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        prixLabel.setText("Prix:300DH");
+        prixLabel.setIconTextGap(1);
 
-        jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
-        jLabel7.setText("Surface:100m²");
+        surfaceLabel.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        surfaceLabel.setText("Surface:100m²");
 
-        jLabel8.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
-        jLabel8.setText("chambre:3");
-        jLabel8.setIconTextGap(1);
+        chambreLabel.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        chambreLabel.setText("chambre:3");
+        chambreLabel.setIconTextGap(1);
 
-        jLabel9.setBackground(new java.awt.Color(242, 208, 234));
-        jLabel9.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
-        jLabel9.setText("Ville: Agadir");
-        jLabel9.setIconTextGap(1);
+        villeLabel.setBackground(new java.awt.Color(242, 208, 234));
+        villeLabel.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        villeLabel.setText("Ville: Agadir");
+        villeLabel.setIconTextGap(1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -78,12 +100,12 @@ public class PCards extends RoundJPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel9))
+                    .addComponent(prixLabel)
+                    .addComponent(villeLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(surfaceLabel)
+                    .addComponent(chambreLabel))
                 .addGap(23, 23, 23))
         );
         jPanel3Layout.setVerticalGroup(
@@ -91,12 +113,12 @@ public class PCards extends RoundJPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(prixLabel)
+                    .addComponent(surfaceLabel))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(chambreLabel)
+                    .addComponent(villeLabel))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -137,6 +159,11 @@ public class PCards extends RoundJPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formMouseClicked
+
     public void initListCard(){
                 if(this.isListCard){
                   PcardFooter pc = new PcardFooter();
@@ -147,16 +174,32 @@ public class PCards extends RoundJPanel {
                   jPanel2.revalidate();
                   jPanel2.repaint();
         }
+                
+    }
+    
+    public void addOnmouseClickedevent(AppartementData appartement,Login loginFrame){
+        this.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // Handle the mouse click event here
+                AddAppartement addApcard = new AddAppartement(loginFrame , appartement);
+                  loginFrame.addPanel(addApcard, "editApp");
+                   loginFrame.showPanel("editApp");
+
+    }
+});
     }
 
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel chambreLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    public javax.swing.JLabel prixLabel;
+    public javax.swing.JLabel surfaceLabel;
+    public javax.swing.JLabel villeLabel;
     // End of variables declaration//GEN-END:variables
 }

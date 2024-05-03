@@ -119,4 +119,23 @@ public static int addVille(String name) {
         }
         return villes;
     }
+    
+    public static String getVilleNameById(int id) {
+        String sql = "SELECT name FROM Ville WHERE id = ?";
+        String villeName = null;
+
+        try (Connection conn = DBConnect.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    villeName = rs.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching ville name: " + e.getMessage());
+        }
+
+        return villeName;
+    }
 }

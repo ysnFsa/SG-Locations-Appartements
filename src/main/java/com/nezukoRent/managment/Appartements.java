@@ -4,14 +4,20 @@
  */
 package com.nezukoRent.managment;
 
+import com.nezukoRent.database.AppartementData;
+import com.nezukoRent.database.AppartementTableHandler;
+import com.nezukoRent.database.VilleData;
+import com.nezukoRent.database.VilleTableHandler;
 import ui.customcomponents.PCards;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -32,10 +38,9 @@ public class Appartements extends javax.swing.JPanel {
         initComponents();
          jPanel4.setLayout(new GridLayout(0, 3,30, 30)); 
         jPanel4.removeAll();  
-        addCardsToGrid(jPanel4 , false);  
-        
-        jPanel4.revalidate();
-        jPanel4.repaint();
+       // addCardsToGrid(jPanel4 , false);  
+        getAPP( false,LoginFrame);
+      
     }
 
     /**
@@ -321,8 +326,7 @@ public class Appartements extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
+                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,8 +334,8 @@ public class Appartements extends javax.swing.JPanel {
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(jButton6)))
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -359,6 +363,7 @@ public class Appartements extends javax.swing.JPanel {
         // TODO add your handling code here:
         ShowSettings(LoginFrame);
 
+  
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -370,11 +375,48 @@ public static void ShowSettings(JFrame frame){
      overlayDialog.setLocationRelativeTo(frame);
      overlayDialog.setVisible(true);
 }
+
+
+public static void getAPP(boolean isListCard , Login LoginFrame){
+  jPanel4.removeAll(); 
+  
+    jPanel4.revalidate();
+        jPanel4.repaint();
+  
+try {
+        List<AppartementData> appartements = AppartementTableHandler.getAllAppartements(); 
+     
+
+        for (AppartementData appartement : appartements) {
+            //System.out.println("ville : "+ville.getName() + " : "+ville.getId());
+             PCards card = new PCards(isListCard , appartement , LoginFrame); 
+             card.chambreLabel.setText( "Chambre : " + String.valueOf(appartement.getChambres()));
+             card.prixLabel.setText("Prix : " +  String.valueOf(appartement.getPrix()) +" DH");
+             card.surfaceLabel.setText( "Surface : "+String.valueOf(appartement.getSurface()) + " m²");
+              card.villeLabel.setText( "Ville : " + VilleTableHandler.getVilleNameById(appartement.getVilleId()));
+                 jPanel4.add(card);
+        }
+          jPanel4.revalidate();
+    jPanel4.repaint();
+
+  
+    } catch (Exception e) {
+        e.printStackTrace();
+       // JOptionPane.showMessageDialog(this, "Error loading cities: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+  jPanel4.revalidate();
+        jPanel4.repaint();
+
+
+}
+
+
 public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
     panel.removeAll(); 
 
     for (int i = 0; i < 109; i++) { 
         PCards card = new PCards(isListCard);
+        card.chambreLabel.setText("hey");
     
         panel.add(card);
     }
@@ -400,6 +442,9 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+               Users user = new Users(this.LoginFrame);
+                   this.LoginFrame.addPanel(user, "users");
+                   this.LoginFrame.showPanel("users");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -445,7 +490,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
+    public static javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
