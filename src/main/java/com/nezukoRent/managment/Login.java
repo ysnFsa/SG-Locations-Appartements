@@ -6,9 +6,9 @@ import com.nezukoRent.database.AdminTableHandler;
 import ui.customcomponents.RoundedButton;
 
 import java.awt.CardLayout;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
-import ui.customcomponents.MyPasswordField;
-import ui.customcomponents.MyTextField;
+import javax.swing.border.EmptyBorder;
 
 
 /*
@@ -42,10 +42,13 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new MyTextField();
+        jTextField1 = new javax.swing.JTextField();
         jButton1 = new RoundedButton("",30);
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        alertLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
@@ -56,17 +59,25 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setName(""); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 660));
         setLocationRelativeTo(null);
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
         jPanel1.setLayout(new java.awt.CardLayout());
 
         jPanel2.setBackground(new java.awt.Color(237, 241, 244));
         jPanel2.setPreferredSize(new java.awt.Dimension(300, 660));
+        jPanel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel2KeyPressed(evt);
+            }
+        });
 
-        MyTextField jTextField1 = new MyTextField();
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField1.setName("Username");
-        jTextField1.setHint("Username *");
         jTextField1.setSelectionColor(new java.awt.Color(73, 104, 100));
 
         jButton1.setBackground(new java.awt.Color(109, 145, 129));
@@ -81,23 +92,29 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        MyPasswordField jPasswordField1 = new MyPasswordField();
-        jPasswordField1.setHint("Password *");
         jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/4043272_avatar_lazybones_sloth_sluggard_icon (2).png"))); // NOI18N
+
+        jLabel1.setText("Username");
+
+        jLabel3.setText("Password");
+
+        alertLabel.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        alertLabel.setForeground(new java.awt.Color(255, 51, 51));
+        alertLabel.setText("Wrong username or password!!");
+        alertLabel.setVisible(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 120, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -106,21 +123,44 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(175, 175, 175)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(alertLabel)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alertLabel)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
+
+        // Set the border for the text field
+        jTextField1.setBorder(new EmptyBorder(5, 10, 5, 10));
+        jPasswordField1.setBorder(new EmptyBorder(5, 10, 5, 10));
 
         jPanel1.add(jPanel2, "card2");
 
@@ -132,24 +172,28 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
      
-           String Uname= "admin";//jTextField1.getText();
-           String passwd="admin"; // jPasswordField1.getText();
-            System.out.println("uname : " +jTextField1.getText() );
-           System.out.println("passwd : " +passwd );
-          if( AdminTableHandler.checkLogin(Uname , passwd)){
-              System.out.println("logged in");
-            Appartements panelOne = new Appartements(this);
-        jPanel1.add(panelOne, "Home");
-        CardLayout cardLayout = (CardLayout) jPanel1.getLayout();
-        cardLayout.show(jPanel1, "Home");
-          
-          }else{
-               System.out.println("wrong login");
-              jTextField1.setText("");
-              jPasswordField1.setText("");
-          }
+  LogUserIn();
       
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPanel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel2KeyPressed
+        // TODO add your handling code here:
+        
+   
+    }//GEN-LAST:event_jPanel2KeyPressed
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        // TODO add your handling code here:
+              if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+       
+               LogUserIn();
+    }
+    }//GEN-LAST:event_jPasswordField1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -205,16 +249,39 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                new Login().setVisible(true);
-              
+             // SetupDB.dropTable("Appartement");
               SetupDB.Setup();
               
             }
         });
     }
+    
+    private void LogUserIn(){
+    
+             String Uname= jTextField1.getText();
+           String passwd= jPasswordField1.getText();
+        
+          if( AdminTableHandler.checkLogin(Uname , passwd)){
+              System.out.println("logged in");
+            Appartements panelOne = new Appartements(this);
+        jPanel1.add(panelOne, "Home");
+        CardLayout cardLayout = (CardLayout) jPanel1.getLayout();
+        cardLayout.show(jPanel1, "Home");
+          
+          }else{
+               System.out.println("wrong login");
+              jTextField1.setText("");
+              jPasswordField1.setText("");
+              alertLabel.setVisible(true);
+          }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alertLabel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
