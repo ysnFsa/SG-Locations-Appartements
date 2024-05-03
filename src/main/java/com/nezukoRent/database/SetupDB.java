@@ -22,5 +22,6 @@ public class SetupDB {
               AdminTableHandler.initializeAdminProfile();
                VilleTableHandler.createTable();
                QuartierTableHandler.createTable();
+               AppartementTableHandler.createTable();
              }
 }

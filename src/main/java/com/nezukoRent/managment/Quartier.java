@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package component;
+package com.nezukoRent.managment;
 
 /**
  *
@@ -33,6 +33,7 @@ public class Quartier extends javax.swing.JPanel {
           renderQuartiers();
           populateVillesComboBox();
           displayQuartiers();
+      
     }
 
     /**
@@ -68,7 +69,6 @@ public class Quartier extends javax.swing.JPanel {
         });
 
         jScrollPane1.setViewportView(jList1);
-        displayQuartiers();
 
         jButton1.setBackground(new java.awt.Color(109, 145, 129));
         jButton1.setFont(new java.awt.Font("Meera", 1, 18)); // NOI18N
@@ -150,14 +150,14 @@ public class Quartier extends javax.swing.JPanel {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jButton2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton3))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 15, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(40, 40, 40)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -207,13 +207,13 @@ private void populateVillesComboBox() {
 }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("Button 1 clicked."); // Debugging statement
+          
+ System.out.println("Button 1 clicked.");
         String quartierName = jTextField1.getText().trim();
 
     if (!quartierName.isEmpty()) {
         String selectedVilleName = (String) jComboBox1.getSelectedItem();
         
-        // Debugging statement to print selected Ville name
         System.out.println("Selected Ville: " + selectedVilleName);
         
         VilleData selectedVille = null;
@@ -228,13 +228,11 @@ private void populateVillesComboBox() {
         if (selectedVille != null) {
             int id = QuartierTableHandler.addQuartier(quartierName, selectedVille.getId());
             
-            // Debugging statement to print the generated id
+       
             System.out.println("Generated Quartier ID: " + id);
             
             if (id != -1) {
-                // Create a new QuartierData object with the generated id, quartier name, and id_ville
                 QuartierData newQuartier = new QuartierData(id, quartierName, selectedVille.getId());
-                
                 model.addElement(newQuartier);
                 jList1.ensureIndexIsVisible(model.getSize() - 1);
                 jTextField1.setText("");
@@ -247,6 +245,8 @@ private void populateVillesComboBox() {
     } else {
         JOptionPane.showMessageDialog(null, "Quartier name cannot be empty.", "Warning", JOptionPane.WARNING_MESSAGE);
     }
+        
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -289,7 +289,7 @@ private void populateVillesComboBox() {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
-
+/*
 private void displayQuartiers() {
     try {
         List<QuartierData> quartiers = QuartierTableHandler.getAllQuartiers(); 
@@ -306,8 +306,25 @@ private void displayQuartiers() {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error loading quartiers: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
+}*/
+    
+private void displayQuartiers() {
+    
+    try {
+        List<QuartierData> villes = QuartierTableHandler.getAllQuartiers(); 
+        model.clear(); 
 
+        for (QuartierData ville : villes) {
+            System.out.println("ville : "+ville.getName() + " : "+ville.getId());
+            model.addElement(ville); 
+        }
+
+        jList1.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading cities: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 private void renderQuartiers() {
     
     jList1.setCellRenderer(new DefaultListCellRenderer() {
@@ -332,7 +349,7 @@ private void renderQuartiers() {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<QuartierData> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
