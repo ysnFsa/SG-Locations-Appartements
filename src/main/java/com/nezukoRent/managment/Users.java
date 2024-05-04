@@ -39,7 +39,7 @@ public class Users extends javax.swing.JPanel {
     private JPanel usersGridPanel;
     private JPanel scrollPanelContainer;
     
-    public Users() {
+    public Users(Login LoginFrame) {
         initComponents();
         // START USERS JPANEL
         this.setLayout(new BorderLayout());
@@ -63,7 +63,7 @@ public class Users extends javax.swing.JPanel {
         jPanel1_1_1.setBackground(backgroundColor);
         
         goBackIcon = new JLabel();
-        goBackIcon.setIcon(new ImageIcon(getClass().getResource("/left-arrow.png")));
+        goBackIcon.setIcon(new ImageIcon(getClass().getResource("/icons/baseline_keyboard_arrow_right_24px.png")));
         goBackIcon.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
         
         appartementsLabel = new JLabel();
@@ -103,7 +103,7 @@ public class Users extends javax.swing.JPanel {
         
         settingIcon = new JLabel();
         settingIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settingIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/settings.png"))); 
+        settingIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/setting_1.png"))); 
         settingIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         jPanel1_2.setLayout(new FlowLayout(FlowLayout.CENTER,20,5));
