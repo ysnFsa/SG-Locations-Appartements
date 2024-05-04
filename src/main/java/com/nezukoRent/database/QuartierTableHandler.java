@@ -151,7 +151,7 @@ public static int addQuartier(String name, int id_ville) {
        
        public static int getQuartierId(String name , int id) {
     String sql = "SELECT id FROM Quartier WHERE name = ? and id_ville=?;";
-    int Qid = -1; // Initialize with an empty string in case no result is found
+    int Qid = -1; 
     
     try (Connection conn = DBConnect.connect();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -165,6 +165,8 @@ public static int addQuartier(String name, int id_ville) {
     } catch (SQLException e) {
         System.out.println(e.getMessage());
     }
+    
+    System.out.println("the heeeeeck **===>" + name + " "+ id + " "+Qid);
     return Qid;
 }
        

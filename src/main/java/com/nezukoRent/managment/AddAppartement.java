@@ -5,6 +5,8 @@
 package com.nezukoRent.managment;
 import com.nezukoRent.database.AppartementData;
 import com.nezukoRent.database.AppartementTableHandler;
+import com.nezukoRent.database.PhotosData;
+import com.nezukoRent.database.PhotosTableHandler;
 import com.nezukoRent.database.VilleData;
 import com.nezukoRent.database.VilleTableHandler;
 import com.nezukoRent.database.QuartierData;
@@ -14,6 +16,7 @@ import ui.customcomponents.RoundedLabel;
 import ui.customcomponents.RoundedButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,11 +25,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -48,6 +58,8 @@ public class AddAppartement extends javax.swing.JPanel {
         initComponents();
         
         populateVillesComboBox();
+       addFileDlgToLabels();
+       addButtonEvent();
        
     }
     
@@ -60,6 +72,7 @@ public class AddAppartement extends javax.swing.JPanel {
         populateVillesComboBox();
         initInfo(appartement);
         addDeleteButton(jPanel4);
+          addFileDlgToLabels();
     }
 
     /**
@@ -102,8 +115,10 @@ public class AddAppartement extends javax.swing.JPanel {
         jLabel12 = new RoundedLabel("/icons/image.png", 30 , true , true);
         jLabel13 = new RoundedLabel("/icons/image.png", 30 , true , true);
         jLabel14 = new RoundedLabel("/icons/image.png", 30 , true , true);
-        jLabel15 = new RoundedLabel("/home/yassin/Desktop/cours/s6/mobile/image.png", 30,true , false);
-        jLabel11 = new RoundedLabel("/home/yassin/Desktop/cours/s6/mobile/ADD1.png", 30 , true , false);
+        jLabel15 = new RoundedLabel("/icons/image.png", 30,true , true);
+        jLabel11 = new  RoundedLabel("/icons/image.png", 30 , true , true);
+        jLabel17 = new RoundedLabel("/icons/image.png", 30 , true , true);
+        jLabel18 = new RoundedLabel("/icons/image.png", 30 , true , true);
         jPanel4 = new javax.swing.JPanel();
         jButton3 = new RoundedButton("" , 30);
         jLabel10 = new javax.swing.JLabel();
@@ -217,7 +232,7 @@ public class AddAppartement extends javax.swing.JPanel {
             }
         });
 
-        appartementTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        appartementTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Standard", "Studio", "Duplex", "Villa", "Garden" }));
 
         quartierCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -295,7 +310,7 @@ public class AddAppartement extends javax.swing.JPanel {
                         .addComponent(villeCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(91, 91, 91)
                         .addComponent(quartierCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(24, 24, 24))
+                .addGap(44, 44, 44))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,28 +353,74 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.setBorder(new EmptyBorder(25, 95, 15, 95)); // Top, left, bottom, right padding
         jPanel3.setLayout(new BorderLayout());
         jPanel3.setBackground(new java.awt.Color(237, 241, 244));
-        jPanel3.setLayout(new java.awt.GridLayout(3, 3, 12, 12));
+        jPanel3.setLayout(new java.awt.GridLayout(3, 3, 52, 52));
 
         jLabel8.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel8);
 
         jLabel9.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel9);
 
         jLabel12.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel12);
 
         jLabel13.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel13);
 
         jLabel14.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel14);
 
         jLabel15.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel15);
 
         jLabel11.setBackground(new java.awt.Color(153, 153, 0));
         jPanel3.add(jLabel11);
+
+        jLabel17.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel17);
+
+        jLabel18.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel18MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel18);
 
         jPanel4.setBackground(new java.awt.Color(237, 241, 244));
         jPanel4.setLayout(new java.awt.GridBagLayout());
@@ -409,12 +470,12 @@ public class AddAppartement extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGap(146, 146, 146))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 492, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))))
+                        .addGap(27, 27, 27))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel10)
@@ -443,7 +504,7 @@ public class AddAppartement extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -468,7 +529,7 @@ public class AddAppartement extends javax.swing.JPanel {
         Appartements.ShowSettings(LoginFrame);
         //scrollPane.setViewportView(jPanel4);
 
-        //scrollPane.revalidate();  // Make sure the scroll pane updates
+        //scrollPane.revalidate();  
         //scrollPane.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -478,8 +539,23 @@ public class AddAppartement extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+     
+
         
-        double prix =   Double.valueOf(prixInput.getText());
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    
+    
+    public void addButtonEvent(){
+      
+    jButton3.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        String descreption = descreptionText.getText();
+      
+                double prix =   Double.valueOf(prixInput.getText());
         double surface =   Double.valueOf(surfaceInput.getText());
         int villeId =getVillId(villeCombobox.getSelectedItem().toString());
         String quartier = quartierCombobox.getSelectedItem().toString();
@@ -488,17 +564,102 @@ public class AddAppartement extends javax.swing.JPanel {
         Boolean disponible = isDisponible.isSelected();
         String type=appartementTypeCombobox.getSelectedItem().toString();
         int numChambres = Integer.valueOf(chambreCombobox.getSelectedItem().toString());
+        
+        
         //addAppartement( type,  surface,  chambres,  disponibilite,boolean meublee, double prix, int ville_id, int quartier_id)
          System.out.println("quartier id *********: "+ idQuartier + " **** ville id  : "+ villeId);
-        AppartementTableHandler.addAppartement(type, surface, numChambres, disponible,ismeublee, prix, villeId, idQuartier);
+      int aprtId= AppartementTableHandler.addAppartement( surface, numChambres, disponible,ismeublee, prix, villeId, idQuartier,descreption,type);
+      if(aprtId!=-1) JOptionPane.showMessageDialog(null, "Appartement added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println("**************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + aprtId);
+           for (Component component : jPanel3.getComponents()) {
+     
+            if (component instanceof RoundedLabel) {
+                if(((RoundedLabel) component).isImgUpdated()){
+                System.out.println("Found a label with text: " +  ((RoundedLabel) component).getImagePath());
+                String newImgPath=copyImage( ((RoundedLabel) component).getImagePath());
+                PhotosTableHandler.insertPhoto(newImgPath, aprtId);
+                
+                }
+                
+    
+                
+            }
+        }
+    }
+});
+    
+    }
+    
+    public void UpdateButtonEvent(){
+       
+    jButton3.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+         String descreption = descreptionText.getText();
+                double prix =   Double.valueOf(prixInput.getText());
+        double surface =   Double.valueOf(surfaceInput.getText());
+        int villeId =getVillId(villeCombobox.getSelectedItem().toString());
+        String quartier = quartierCombobox.getSelectedItem().toString();
+        int idQuartier = QuartierTableHandler.getQuartierId(quartier , villeId);
+        Boolean ismeublee = isMeublee.isSelected();
+        Boolean disponible = isDisponible.isSelected();
+        String type=appartementTypeCombobox.getSelectedItem().toString();
+        int numChambres = Integer.valueOf(chambreCombobox.getSelectedItem().toString());
         
         
-    }//GEN-LAST:event_jButton3ActionPerformed
-
+        //AppartementTableHandler.updateAppartement( aprtId,  surface,  chambres,  disponibilite,boolean meublee, double prix, int ville_id, int quartier_id,descreption,type)
+         System.out.println("quartier id *********: "+ idQuartier + " **** ville id  : "+ villeId);
+         
+         
+      int aprtId= appartement.getId();
+      if(AppartementTableHandler.updateAppartement( aprtId,  surface,  numChambres,  disponible, ismeublee,  prix,  villeId,  idQuartier,descreption,type)){
+        JOptionPane.showMessageDialog(null, "Appartement Updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE); 
+         
+          //      AddAppartement.this.LoginFrame.showPanel("Home");
+                Appartements.getAPP(false, LoginFrame);
+      
+      }
+      
+           for (Component component : jPanel3.getComponents()) {
+     
+            if (component instanceof RoundedLabel) {
+                if(((RoundedLabel) component).isImgUpdated()){
+                System.out.println(" ************ Found a label with text: " +  ((RoundedLabel) component).getImagePath());
+                
+                
+               
+                 RoundedLabel label = (RoundedLabel) component;
+                 
+                 if(label.getPhotoData()==null){
+                  String newImgP=copyImage( ((RoundedLabel) component).getImagePath());
+                    PhotosTableHandler.insertPhoto(newImgP, aprtId);
+                    System.out.println("apprt is null inserting..... newImgP : " + newImgP);
+                 }else{
+                     String newImgPath=copyImage( ((RoundedLabel) component).getImagePath());
+                  int picId=label.getPhotoData().getId();
+                System.out.println("apprt is Not null Updating..... picId : " + picId);
+               PhotosTableHandler.updatePhotoPath( picId ,newImgPath );
+                 }
+               
+                
+                }
+                
+    
+                
+            }
+        }
+    }
+});
+    
+    }
+    
+    
     public void initInfo(AppartementData appartement){
+      
+        descreptionText.setText(appartement.getDescreption());
         prixInput.setText(String.valueOf(appartement.getPrix()));
         surfaceInput.setText(String.valueOf(appartement.getSurface()));
-        
+        int aprtId=appartement.getId();
         String currentQT=QuartierTableHandler.getQuartierId(appartement.getQuartierId());
         String currentVL=VilleTableHandler.getVilleNameById(appartement.getVilleId());
         System.out.println("quartier id :  : "+currentQT);
@@ -508,10 +669,62 @@ public class AddAppartement extends javax.swing.JPanel {
          chambreCombobox.setSelectedItem(String.valueOf(appartement.getChambres()));
          isMeublee.setSelected(true);
          isDisponible.setSelected(true);
+         
+         List<PhotosData> photos = PhotosTableHandler.getPhotos(aprtId);
+
+    for (int i = 0; i < photos.size(); i++) {
+        PhotosData photoData = photos.get(i);
+        if (i < jPanel3.getComponents().length) {
+            Component component = jPanel3.getComponents()[i];
+            if (component instanceof RoundedLabel) {
+                RoundedLabel label = (RoundedLabel) component;
+                String photoPath = photoData.getPath();
+                System.out.println("************ path to  : "+ photoPath + " *******************");
+                label.updateImage(photoPath, true);
+               
+                label.setPhotoData(photoData);
+            }
+        } else {
+            break;
+        }
+}
+
+         
+ 
+        
 
     
          
     //prixInput.setText("");
+    }
+    
+    
+    private void addFileDlgToLabels(){
+    
+    for (Component component : jPanel3.getComponents()) {
+    if (component instanceof RoundedLabel) {
+        System.out.println("****am here");
+        RoundedLabel label = (RoundedLabel) component;
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Add your code here to handle the mouse click event
+                // For example:
+                  JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                            "Image files", "jpg", "jpeg", "png", "gif"));
+                    int result = fileChooser.showOpenDialog(LoginFrame);
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        ((RoundedLabel)label).updateImage(selectedFile.getAbsolutePath() , false);
+                        ((RoundedLabel)label).setImageUpdated(true);
+        
+                    }
+                
+            }
+        });
+    }
+}
     }
     
     private void populateVillesComboBox() {
@@ -558,21 +771,20 @@ public class AddAppartement extends javax.swing.JPanel {
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         // TODO add your handling code here:
-        
-     
-       Quartier quartier = new Quartier();
+               Quartier quartier = new Quartier();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Quartiers", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(quartier);
      overlayDialog.setSize(400, 450);
      overlayDialog.setResizable(false);
      overlayDialog.setLocationRelativeTo(this.LoginFrame);
      overlayDialog.setVisible(true);
+ 
 
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
-            Ville ville = new Ville();
+             Ville ville = new Ville();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Villes", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(ville);
      overlayDialog.setSize(400, 450);
@@ -593,6 +805,78 @@ public class AddAppartement extends javax.swing.JPanel {
         
     }//GEN-LAST:event_villeComboboxActionPerformed
 
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        
+    
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+
+    }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        // TODO add your handling code here:
+   
+                    
+    }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel18MouseClicked
+
+    
+public String copyImage(String fullPath) {
+    
+    
+    
+    
+    File selectedFile = new File(fullPath);
+    String resourcePath="";
+    String destinationPath = "src/main/resources/images/";
+    File destinationDir = new File(destinationPath);
+    if (!destinationDir.exists()) {
+        destinationDir.mkdirs();  
+    }
+
+    File destinationFile = new File(destinationDir, selectedFile.getName());
+    try {
+if (selectedFile != null && destinationFile != null) {
+    Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+} else {
+    System.out.println("selectedFile or destinationFile is null");
+}
+
+        RoundedLabel roundedLabel = (RoundedLabel) jLabel8;
+         resourcePath = "/images/" + selectedFile.getName();
+        roundedLabel.updateImage(resourcePath, true);
+    } catch (IOException ex) {
+        System.out.println("ahaha hnaaaa$$$$$$$");
+        ex.printStackTrace();
+    }
+    
+    return resourcePath;
+}
+    
     public   int getVillId(String name){
          String selectedVilleName = (String) villeCombobox.getSelectedItem();
           VilleData selectedVille = null;
@@ -606,9 +890,10 @@ public class AddAppartement extends javax.swing.JPanel {
         return selectedVille.getId() ;
     }
     public  void addDeleteButton(JPanel panel) {
- 
+        UpdateButtonEvent();
         JButton ajouterButton = jButton3;
-        Dimension preferredSize = new Dimension(150, 40); // Larger size
+        ajouterButton.setText("Update");
+        Dimension preferredSize = new Dimension(150, 40); 
 
         JButton deleteButton = new RoundedButton("Delete",30);
         deleteButton.setBackground(new Color(193, 12, 25));
@@ -638,16 +923,19 @@ public class AddAppartement extends javax.swing.JPanel {
 
     public  void deleteApp() {
        
-         if(JOptionPane.showConfirmDialog(null, "Are you sure you want to clear table Quartier?", "Confirmation", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-         
+         if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete Appartyement id : "+appartement.getId()+"?", "Confirmation", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+            PhotosTableHandler.deletePhotos(appartement.getId());
             if( AppartementTableHandler.deleteAppartement(appartement.getId())){
                  JOptionPane.showMessageDialog(null, "Appartement deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE); 
                 this.LoginFrame.showPanel("Home");
+               
              
         Appartements.getAPP(false, LoginFrame);
             }else{
                    JOptionPane.showMessageDialog(null, "Failed detelke Appartement.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            
+    
              
              System.out.println("appid : " + appartement.getId());
              
@@ -675,6 +963,8 @@ public class AddAppartement extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

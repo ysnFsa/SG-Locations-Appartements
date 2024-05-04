@@ -28,6 +28,7 @@ public class SetupDB {
                VilleTableHandler.createTable();
                QuartierTableHandler.createTable();
                AppartementTableHandler.createTable();
+               PhotosTableHandler.createTable();
              }
              
           public static void dropTable(String tableName) {

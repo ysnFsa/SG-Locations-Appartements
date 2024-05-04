@@ -8,11 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
-
+import com.nezukoRent.database.PhotosData;
 public class RoundedLabel extends JLabel {
     private BufferedImage image;
     private int radius; 
     private boolean roundAllCorners;
+    private String imagePath;
+    private PhotosData photo;
+    private boolean isImageUpdated=false;
 
     /**
      * Constructor for RoundedLabel.
@@ -23,6 +26,7 @@ public class RoundedLabel extends JLabel {
      */
     public RoundedLabel(String imagePath, int radius, boolean roundAllCorners, boolean fromResource) {
         this.radius = radius;
+        this.imagePath = imagePath;
         this.roundAllCorners = roundAllCorners;
         try {
             if (fromResource) {
@@ -82,5 +86,44 @@ public class RoundedLabel extends JLabel {
         int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
         g2d.drawString(getText(), x, y);
         g2d.dispose();
+    }
+    
+    public void updateImage(String imagePath, boolean fromResource) {
+        this.imagePath=imagePath;
+       
+    try {
+        if (fromResource) {
+            
+            InputStream is = getClass().getResourceAsStream(imagePath);
+            if (is != null) {
+                image = ImageIO.read(is);
+            } else {
+                System.out.println("Resource not found: " + imagePath);
+            }
+        } else {
+            image = ImageIO.read(new File(imagePath));
+        }
+    } catch (Exception e) {
+       
+    }
+    
+    repaint();
+}
+    
+    public void setPhotoData(PhotosData photodata){
+        this.photo=photodata;
+    }
+    
+    public PhotosData getPhotoData(){ return this.photo;}
+    
+    
+    public void setImageUpdated(Boolean updated){ this.isImageUpdated=updated;}
+    public boolean isImgUpdated(){
+    return isImageUpdated;
+    }
+    
+    
+     public String getImagePath() {
+        return imagePath;
     }
 }

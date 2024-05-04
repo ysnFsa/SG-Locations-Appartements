@@ -189,7 +189,9 @@ public class PCards extends RoundJPanel {
     }
 });
     }
-
+  public void changeImage(String imagePath) {
+        ((RoundedLabel)jLabel1).updateImage(imagePath, true);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

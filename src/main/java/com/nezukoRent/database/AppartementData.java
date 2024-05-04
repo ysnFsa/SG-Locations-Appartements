@@ -17,8 +17,9 @@ public class AppartementData {
     private double prix;
     private int ville_id;
     private int quartier_id;
+    private String descreption;
 
-    public AppartementData(int id, String type, double surface, int chambres, boolean disponibilite, double prix, int ville_id, int quartier_id) {
+    public AppartementData(int id, String type, double surface, int chambres, boolean disponibilite, double prix, int ville_id, int quartier_id, String descreption) {
         this.id = id;
         this.type = type;
         this.surface = surface;
@@ -27,6 +28,7 @@ public class AppartementData {
         this.prix = prix;
         this.ville_id = ville_id;
         this.quartier_id = quartier_id;
+        this.descreption=descreption;
     }
 
     public int getId() {
@@ -59,5 +61,9 @@ public class AppartementData {
 
     public int getQuartierId() {
         return quartier_id;
+    }
+    
+    public String getDescreption(){
+        return this.descreption;
     }
 }
