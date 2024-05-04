@@ -78,21 +78,68 @@ public class AdminTableHandler {
         }
     }
            
-              public static boolean checkLogin(String username, String password) {
-        String sql = "SELECT id FROM Admin WHERE name = ? AND passwd = ?";
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        public static boolean checkLogin(String username, String password) {
+    String dbPassword = getPassword(username);
+    if (dbPassword == null) {
+        dbPassword = getPassword(getOldUsername(username));
+        if (dbPassword == null) {
+            System.out.println("User not found: " + username);
+            return false;
         }
-        return false;
     }
+    System.out.println("Retrieved password: " + dbPassword);
+    return dbPassword.equals(password);
+}
+
+        private static String getOldUsername(String newUsername) {
+    String sql = "SELECT name FROM Admin WHERE passwd = (SELECT passwd FROM Admin WHERE name = ?) AND name != ?";
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, newUsername);
+        pstmt.setString(2, newUsername);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getString("name");
+        }
+    } catch (SQLException e) {
+        System.err.println("Error retrieving old username: " + e.getMessage());
+    }
+    return null;
+}
+
+private static String getPassword(String username) {
+    String sql = "SELECT passwd FROM Admin WHERE name = ?";
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, username);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getString("passwd");
+        }
+    } catch (SQLException e) {
+        System.err.println("Error retrieving password: " + e.getMessage());
+    }
+    return null;
+}
+              
+              
+    private static final String UPDATE_PASSWORD_QUERY = "UPDATE Admin SET passwd =? WHERE name =?";
+
+    public static boolean updatePassword(String username, String newPassword) {
+        try (Connection conn = DBConnect.connect();
+             PreparedStatement pstmt = conn.prepareStatement(UPDATE_PASSWORD_QUERY)) {
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating password: " + e.getMessage(), e);
+        }
+    }
+}
+
 
     
     
-}
+

@@ -4,18 +4,36 @@
  */
 package com.nezukoRent.managment;
 
+import java.awt.Container;
+import com.nezukoRent.database.AdminTableHandler;
+
+import javax.swing.*;
+
 /**
  *
  * @author User
  */
 public class Settings extends javax.swing.JPanel {
+    
+
+    private Login LoginFrame;
 
     /**
      * Creates new form Settings
      */
+    
     public Settings() {
         initComponents();
+        
     }
+    
+    
+    public Settings(Login login) {
+        initComponents();
+        this.LoginFrame= LoginFrame;
+    }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,7 +50,6 @@ public class Settings extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -51,82 +68,89 @@ public class Settings extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setText("Username");
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jTextField1.setText("Admin");
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jTextField1.setText("admin");
+        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        jTextField1.setName("Username");
         jTextField1.setMargin(new java.awt.Insets(2, 10, 2, 6));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel5.setText("Password");
 
-        jPasswordField1.setEditable(false);
+        jPasswordField1.setEditable(true);
         jPasswordField1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jPasswordField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jPasswordField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         jPasswordField1.setMargin(new java.awt.Insets(2, 12, 2, 6));
         jPasswordField1.setPreferredSize(new java.awt.Dimension(39, 18));
-
-        jButton1.setBackground(new java.awt.Color(237, 241, 244));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 255));
-        jButton1.setText("Change Password ");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jButton3.setBackground(new java.awt.Color(109, 145, 129));
         jButton3.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Save");
         jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(102, 102, 102));
         jButton4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Cancel");
         jButton4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel6.setText("Confirm Password");
-        jLabel6.setVisible(false);
+        jLabel6.setVisible(true);
 
         jPasswordField3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jPasswordField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPasswordField3.setVisible(false);
+        jPasswordField3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        jPasswordField3.setVisible(true);
 
         jButton5.setBackground(new java.awt.Color(237, 241, 244));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout.png"))); // NOI18N
         jButton5.setBorder(null);
         jButton5.setBorderPainted(false);
         jButton5.setContentAreaFilled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jPasswordField2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jPasswordField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPasswordField2.setVisible(false);
+        jPasswordField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        jPasswordField2.setVisible(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel1.setText("New Password");
-        jLabel1.setVisible(false);
+        jLabel1.setVisible(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(105, 105, 105)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 114, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(223, 223, 223)
                 .addComponent(jLabel2)
-                .addContainerGap(258, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -135,7 +159,6 @@ public class Settings extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGap(141, 141, 141)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
@@ -143,7 +166,8 @@ public class Settings extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(213, 213, 213)))
-                                .addComponent(jLabel6)))
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel4)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel3)
@@ -151,12 +175,6 @@ public class Settings extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(35, 35, 35))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,25 +185,23 @@ public class Settings extends javax.swing.JPanel {
                     .addComponent(jButton5))
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -193,20 +209,105 @@ public class Settings extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        jPasswordField1.setEditable(true);
-                jButton1.setVisible(false);
-                jLabel1.setVisible(true);        
-                jPasswordField2.setVisible(true);
-                jLabel4.setVisible(true);        
-                jPasswordField3.setVisible(true);
-                jLabel6.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        ((JDialog) SwingUtilities.getWindowAncestor(this)).dispose();
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_CANCEL_OPTION);
+    
+    if (choice == JOptionPane.YES_OPTION) {
+        // Close all panels and return to login
+        closeAllPanels();
+        Login login = new Login();
+        login.setTitle("Login");
+        login.setVisible(true);
+    } else if (choice == JOptionPane.NO_OPTION || choice == JOptionPane.CANCEL_OPTION) {
+        // Do nothing if 'No' or 'Cancel' is selected
+    }
+    
+    }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+    String currentPassword = getPasswordFromField(jPasswordField1);
+    String newPassword = getPasswordFromField(jPasswordField2);
+    String confirmPassword = getPasswordFromField(jPasswordField3);
+
+    if (isValidInput(currentPassword, newPassword, confirmPassword)) {
+        try {
+            if (updateAdminCredentials("admin", currentPassword, newPassword)) {
+                JOptionPane.showMessageDialog(this, "Password updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                jPasswordField1.setText("");
+                jPasswordField2.setText("");
+                jPasswordField3.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid input. Please check your input and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+   private String getPasswordFromField(JPasswordField field) {
+    return new String(field.getPassword());
+}
+
+private String getTrimmedTextFromField(JTextField field) {
+    return field.getText().trim();
+}
+
+private boolean isValidInput(String currentPassword, String newPassword, String confirmPassword) {
+    if (currentPassword.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Current password is required.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    if (!newPassword.isEmpty() &&!newPassword.equals(confirmPassword)) {
+        JOptionPane.showMessageDialog(this, "New password and confirm password do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    return true;
+}
+
+private boolean updateAdminCredentials(String username, String currentPassword, String newPassword) throws Exception {
+    if (AdminTableHandler.checkLogin(username, currentPassword)) {
+        if (!newPassword.isEmpty() && newPassword.equals(getPasswordFromField(jPasswordField3))) {
+            // Update password only
+            return AdminTableHandler.updatePassword(username, newPassword);
+        } else {
+            return false;
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Incorrect current password.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+}
+     
+      private void closeAllPanels() {
+    Container parent = getParent();
+    while (parent != null) {
+        if (parent instanceof JDialog) {
+            ((JDialog) parent).dispose();
+            parent = ((JDialog) parent).getOwner();
+            System.out.println("Logged out");
+            break;
+        } else {
+            parent = parent.getParent();
+        }
+    }
+      }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
