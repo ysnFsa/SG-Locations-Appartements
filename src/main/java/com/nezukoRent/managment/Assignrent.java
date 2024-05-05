@@ -4,6 +4,12 @@
  */
 package com.nezukoRent.managment;
 
+import com.nezukoRent.database.AppartementData;
+import com.nezukoRent.database.AppartementTableHandler;
+import com.nezukoRent.database.QuartierTableHandler;
+import com.nezukoRent.database.UserData;
+import com.nezukoRent.database.UserTableHandler;
+import com.nezukoRent.database.VilleTableHandler;
 import java.util.Properties;
 
 /**
@@ -12,11 +18,31 @@ import java.util.Properties;
  */
 public class Assignrent extends javax.swing.JPanel {
 
+    private int clientId;
+    private int appartementID;
     /**
      * Creates new form Assignrent
      */
-    public Assignrent() {
+    public Assignrent(int clientId,int appartementID) {
+        this.clientId = clientId;
+        this.appartementID = appartementID;
         initComponents();
+        System.out.println("Client ID : " + clientId + ", Appartement ID : " + appartementID);
+        UserData client = UserTableHandler.getUser(clientId);
+        if(client != null) {
+            this.jTextField1.setText(""+client.getId());
+            this.jTextField2.setText(client.getFirstName() + " " + client.getLastName());
+            this.jTextField3.setText(client.getTele());
+        } 
+        AppartementData appartement = AppartementTableHandler.getAppartement(this.appartementID);
+        if(appartement != null) {
+            this.jTextField4.setText("" + appartement.getId());
+            this.jTextField5.setText("" + appartement.getPrix());
+            this.jTextField6.setText("" + appartement.getSurface());
+            this.jTextField7.setText(VilleTableHandler.getVilleNameById(appartement.getVilleId()));
+            this.jTextField8.setText(QuartierTableHandler.getquartierNameById(appartement.getQuartierId()));
+            this.jTextField9.setText(appartement.getType());
+        }
         
     }
    
