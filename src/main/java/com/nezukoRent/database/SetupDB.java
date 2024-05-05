@@ -22,14 +22,15 @@ public class SetupDB {
    
               }
              
-             public static void Setup(){ 
-             
-              AdminTableHandler.initializeAdminProfile();
-               VilleTableHandler.createTable();
-               QuartierTableHandler.createTable();
-               AppartementTableHandler.createTable();
-               PhotosTableHandler.createTable();
-             }
+            public static void Setup(){ 
+                AdminTableHandler.initializeAdminProfile();
+                VilleTableHandler.createTable();
+                QuartierTableHandler.createTable();
+                AppartementTableHandler.createTable();
+                PhotosTableHandler.createTable();
+                UserTableHandler.createUserTable();
+                ContratTableHandler.createContratTable();
+            }
              
           public static void dropTable(String tableName) {
    
