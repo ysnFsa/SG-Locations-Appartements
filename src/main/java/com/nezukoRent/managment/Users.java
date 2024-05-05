@@ -1,7 +1,11 @@
 package com.nezukoRent.managment;
 
+
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
+import com.nezukoRent.database.UserData;
+import com.nezukoRent.database.UserTableHandler;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -10,6 +14,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,9 +45,12 @@ public class Users extends javax.swing.JPanel {
     private JScrollPane scrollPanel;
     private JPanel usersGridPanel;
     private JPanel scrollPanelContainer;
+    private Login LoginFrame;
     
     public Users(Login LoginFrame) {
+        FlatLightLaf.setup();
         initComponents();
+        this.LoginFrame=LoginFrame;
         // START USERS JPANEL
         this.setLayout(new BorderLayout());
         
@@ -57,28 +67,35 @@ public class Users extends javax.swing.JPanel {
         
         // START JPANEL 1_1
         jPanel1_1 = new JPanel();
+        jPanel1_1.setBackground(backgroundColor);
         
         // start JPANEL 1_1_1
-        jPanel1_1_1 = new JPanel(new FlowLayout(FlowLayout.LEADING,15,0));
+        jPanel1_1_1 = new JPanel(new FlowLayout(FlowLayout.LEADING,30,0));
         jPanel1_1_1.setBackground(backgroundColor);
         
         goBackIcon = new JLabel();
         goBackIcon.setIcon(new ImageIcon(getClass().getResource("/icons/baseline_keyboard_arrow_right_24px.png")));
         goBackIcon.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
-        
+        goBackIcon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    goBackActionPerformed(e);
+            }
+        });
+        Font navLinkFont = new Font("Liberation Sans", 0, 18); 
         appartementsLabel = new JLabel();
-        appartementsLabel.setFont(new Font("Segoe UI", 1, 16));
+        appartementsLabel.setFont(navLinkFont);
         appartementsLabel.setForeground(new Color(192, 192, 192));
         appartementsLabel.setText("Appartements");
         appartementsLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         usersLabel = new JLabel();
-        usersLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); 
+        usersLabel.setFont(navLinkFont); 
         usersLabel.setText("Users");
         usersLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         analyticsLabel = new JLabel();
-        analyticsLabel.setFont(new Font("Segoe UI", 1, 16));
+        analyticsLabel.setFont(navLinkFont);
         analyticsLabel.setForeground(new Color(192, 192, 192));
         analyticsLabel.setText("Analytics");
         analyticsLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -96,7 +113,7 @@ public class Users extends javax.swing.JPanel {
         jPanel1_2 = new JPanel();
         searchTextField = new javax.swing.JTextField();
         searchTextField.setMargin(new java.awt.Insets(4, 30, 4, 2));
-        searchTextField.setPreferredSize(new java.awt.Dimension(180, 30));
+        searchTextField.setPreferredSize(new java.awt.Dimension(180, 40));
         searchTextField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Search");
         FlatSearchIcon searchIcon = new FlatSearchIcon();
         searchTextField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, searchIcon);
@@ -141,6 +158,7 @@ public class Users extends javax.swing.JPanel {
         sortLabel.setPreferredSize(new Dimension(42, 20));
         // buttons : 
         buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,25,0));
+        buttonsPanel.setBackground(backgroundColor);
         GroupLayout buttonsPanelLayout = new GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         
@@ -232,14 +250,18 @@ public class Users extends javax.swing.JPanel {
         
         usersGridPanel = new JPanel();
         usersGridPanel.setBackground(backgroundColor);
-        int numberOfClients = 10;
-        int numberOfCols = 2;
-        int division = numberOfClients / numberOfCols;
-        int numberOfRows = numberOfClients % numberOfCols != 0 ? division + 1 : division;
-        for (int i = 0 ; i < numberOfClients ; i++) {
-            usersGridPanel.add(new ClientCard());
+        List<UserData> users = fetchUsers();
+        int numberOfClients = users.size();
+        int COLS_NUMBER = 2;
+        int division = numberOfClients / COLS_NUMBER;
+        int numberOfRows = numberOfClients % COLS_NUMBER != 0 ? division + 1 : division;
+        for (UserData user : users) {
+            usersGridPanel.add(new ClientCard(20,this.LoginFrame,user));
         }
-        usersGridPanel.setLayout(new GridLayout(numberOfRows,numberOfCols,20,20));
+        /*for (int i = 0 ; i < numberOfClients ; i++) {
+            usersGridPanel.add(new ClientCard(20,this.LoginFrame));
+        }*/
+        usersGridPanel.setLayout(new GridLayout(numberOfRows,COLS_NUMBER,20,20));
         scrollPanelContainer.add(usersGridPanel,"Card 2");
         scrollPanel.setViewportView(scrollPanelContainer);
         usersContainer.add(scrollPanel,"Card 2");
@@ -248,11 +270,26 @@ public class Users extends javax.swing.JPanel {
         jpanel2.add(usersContainer,BorderLayout.CENTER);
         mainPanel.add(jpanel2);
         // END MAIN
+        this.setBackground(backgroundColor);
         this.add(header,BorderLayout.NORTH);
         this.add(mainPanel,BorderLayout.CENTER);
         // END USERS JPANEL
     }
+    private void goBackActionPerformed(java.awt.event.MouseEvent evt) {                                         
+        this.LoginFrame.showPanel("Home");
+    }
+    
+    private List<UserData> fetchUsers() {
+        try {
+            List<UserData> users = UserTableHandler.getUsers();
+            return users;
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
