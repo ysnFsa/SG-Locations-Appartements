@@ -217,7 +217,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="jPanel7.setLayout(new GridLayout(0, 2,30, 30));&#xa;&#xa;  jPanel7.removeAll();  &#xa;  Appartements.addCardsToGrid(jPanel7 , true);  &#xa;        &#xa;        jPanel7.revalidate();&#xa;        jPanel7.repaint();&#xa;jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);&#xa;jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);"/>
+            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="jPanel7.setLayout(new GridLayout(0, 2,30, 30));&#xa;&#xa;    jPanel7.removeAll();  &#xa;    List&lt;AppartementData&gt; appartements = fetchAppartements();&#xa;    showFetchedAppartements(appartements);&#xa;        &#xa;    jPanel7.revalidate();&#xa;    jPanel7.repaint();&#xa;jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);&#xa;jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);"/>
           </AuxValues>
 
           <Layout>

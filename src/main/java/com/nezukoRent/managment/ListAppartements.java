@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import ui.customcomponents.PCardForAssignAppartementToClient;
 
 /**
  *
@@ -41,6 +42,12 @@ public class ListAppartements extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    private void showFetchedAppartements(List<AppartementData> appartements) {
+        for (AppartementData appartement : appartements) {
+                PCardForAssignAppartementToClient card = new PCardForAssignAppartementToClient(this.loginFrame,this.clientId,appartement); 
+                this.jPanel7.add(card);
         }
     }
     @SuppressWarnings("unchecked")
@@ -133,7 +140,8 @@ public class ListAppartements extends javax.swing.JPanel {
         jPanel7.setLayout(new GridLayout(0, 2,30, 30));
 
         jPanel7.removeAll();
-        Appartements.addCardsToGrid(jPanel7 , true);
+        List<AppartementData> appartements = fetchAppartements();
+        showFetchedAppartements(appartements);
 
         jPanel7.revalidate();
         jPanel7.repaint();
@@ -184,11 +192,6 @@ public class ListAppartements extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
