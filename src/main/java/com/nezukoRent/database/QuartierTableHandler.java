@@ -212,6 +212,24 @@ public static int addQuartier(String name, int id_ville) {
     }
     return quartiers;
 }
+    public static String getquartierNameById(int id) {
+        String sql = "SELECT name FROM Quartier WHERE id = ?";
+        String quartierName = null;
+
+        try (Connection conn = DBConnect.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    quartierName = rs.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching ville name: " + e.getMessage());
+        }
+
+        return quartierName;
+    }
 
 
 
