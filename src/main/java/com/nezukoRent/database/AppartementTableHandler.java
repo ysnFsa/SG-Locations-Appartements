@@ -311,7 +311,32 @@ public static List<AppartementData> getAllAppartementsFiltered(Integer villeid, 
         return false;
     }
 }
+    public static AppartementData getAppartement(int id) {
+        String sql = "SELECT id, type, surface, chambres, disponibilite, prix, ville_id, quartier_id,description FROM Appartement WHERE id = ?";
+        AppartementData selectedAppartement = null;
 
+        try (Connection conn = DBConnect.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String type = rs.getString("type");
+                    double surface = rs.getDouble("surface");
+                    int chambres = rs.getInt("chambres");
+                    Boolean disponibilite = rs.getBoolean("disponibilite");
+                    double prix = rs.getDouble("prix");
+                    int ville_id = rs.getInt("ville_id");
+                    int quartier_id = rs.getInt("quartier_id");
+                    String description = rs.getString("description");
+                    selectedAppartement = new AppartementData(id,type,surface,chambres,disponibilite,prix,ville_id,quartier_id,description);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching Appartement : " + e.getMessage());
+        }
+
+        return selectedAppartement;
+    }
 
       
       
