@@ -29,6 +29,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
           jTextField1.setText("");
+           jPanel1.add(this.jPanel2, "login");
     }
 
     /**
@@ -51,7 +52,7 @@ public class Login extends javax.swing.JFrame {
         alertLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("LOGIN");
+        setTitle("Renting Apartments");
         setPreferredSize(new java.awt.Dimension(500, 600));
         setResizable(false);
 
@@ -74,7 +75,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField1.setName("Username");
@@ -92,7 +92,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -263,6 +262,8 @@ public class Login extends javax.swing.JFrame {
         
           if( AdminTableHandler.checkLogin(Uname , passwd)){
               System.out.println("logged in");
+                
+   
             Appartements panelOne = new Appartements(this);
         jPanel1.add(panelOne, "Home");
         CardLayout cardLayout = (CardLayout) jPanel1.getLayout();
@@ -270,11 +271,14 @@ public class Login extends javax.swing.JFrame {
           
           }else{
                System.out.println("wrong login");
-              jTextField1.setText("");
-              jPasswordField1.setText("");
+             
               alertLabel.setVisible(true);
+              jTextField1.requestFocusInWindow();;
           }
+           jTextField1.setText("");
+              jPasswordField1.setText("");
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel alertLabel;

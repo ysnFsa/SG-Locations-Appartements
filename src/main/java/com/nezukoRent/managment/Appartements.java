@@ -465,8 +465,8 @@ public class Appartements extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-public static void ShowSettings(JFrame frame){
-       Settings setting = new Settings();
+public static void ShowSettings(Login frame ){
+       Settings setting = new Settings(frame);
      JDialog overlayDialog = new JDialog(frame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(setting);
      overlayDialog.setSize(600, 600);

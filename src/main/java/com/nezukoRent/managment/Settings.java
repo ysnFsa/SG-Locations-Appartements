@@ -28,9 +28,10 @@ public class Settings extends javax.swing.JPanel {
     }
     
     
+    
     public Settings(Login login) {
         initComponents();
-        this.LoginFrame= LoginFrame;
+        this.LoginFrame= login;
     }
     
 
@@ -217,17 +218,12 @@ public class Settings extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_CANCEL_OPTION);
+  
+    int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
     
-    if (choice == JOptionPane.YES_OPTION) {
-        // Close all panels and return to login
-        closeAllPanels();
-        Login login = new Login();
-        login.setTitle("Login");
-        login.setVisible(true);
-    } else if (choice == JOptionPane.NO_OPTION || choice == JOptionPane.CANCEL_OPTION) {
-        // Do nothing if 'No' or 'Cancel' is selected
-    }
+        if (choice == JOptionPane.YES_OPTION) {
+
+        closeAllPanels(); }
     
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -292,18 +288,25 @@ private boolean updateAdminCredentials(String username, String currentPassword, 
 }
      
       private void closeAllPanels() {
+       
+        
     Container parent = getParent();
     while (parent != null) {
         if (parent instanceof JDialog) {
             ((JDialog) parent).dispose();
-            parent = ((JDialog) parent).getOwner();
             System.out.println("Logged out");
-            break;
-        } else {
-            parent = parent.getParent();
+            break; // Exit the loop once the dialog is closed
         }
+        parent = parent.getParent();
+        
+     
     }
-      }
+    
+        this.LoginFrame.showPanel("login");
+         this.LoginFrame.setResizable(false);
+        this.LoginFrame.AdjustSize(500, 600);
+        this.LoginFrame.setLocationRelativeTo(null);
+}
     
     
     
