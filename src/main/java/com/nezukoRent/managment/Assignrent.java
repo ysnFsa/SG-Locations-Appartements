@@ -6,6 +6,7 @@ package com.nezukoRent.managment;
 
 import com.nezukoRent.database.AppartementData;
 import com.nezukoRent.database.AppartementTableHandler;
+import com.nezukoRent.database.ContratTableHandler;
 import com.nezukoRent.database.QuartierTableHandler;
 import com.nezukoRent.database.UserData;
 import com.nezukoRent.database.UserTableHandler;
@@ -180,6 +181,11 @@ public class Assignrent extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Assign");
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jDateChooser1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jDateChooser1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -307,6 +313,12 @@ public class Assignrent extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String dateDebut = jDateChooser1.getDate().toString();
+        String dateFin = jDateChooser2.getDate().toString();
+        ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
