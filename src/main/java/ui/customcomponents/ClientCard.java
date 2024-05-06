@@ -1,8 +1,10 @@
 package ui.customcomponents;
 
 import com.nezukoRent.database.UserData;
+import com.nezukoRent.database.UserTableHandler;
 import com.nezukoRent.managment.ListAppartements;
 import com.nezukoRent.managment.Login;
+import com.nezukoRent.managment.Users;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -10,25 +12,44 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class ClientCard extends RoundJPanel {
+public class ClientCard extends RoundJPanel {   
+
+    private UserData userInfo;
+    private Users usersPanel;
     private Login loginFrame;
     private JLabel userIcon;
     private JLabel fullNameLabel;
-    private JLabel dateOfJoinLabel;
+ //   private JLabel dateOfJoinLabel;
     private JLabel numberOfRentsLabel;
     private JPanel informationPanel;
     
-    public ClientCard(int radius,Login loginFrame,UserData userInfo) {
+  /*  public ClientCard(int radius, Login loginFrame, UserData userInfo, Users usersPanel) {
         super(radius);
         this.loginFrame = loginFrame;
+        this.userInfo = userInfo;
+        // Constructor code...
+        this.usersPanel = usersPanel;
+    }*/
+    
+    public ClientCard(int radius, Login loginFrame,UserData userInfo,Users usersPanel) {
+        super(radius);
+        this.loginFrame = loginFrame;
+        this.userInfo = userInfo;
+        // Constructor code...
+        this.usersPanel = usersPanel;
+        
         String fullName = userInfo.getFirstName() + " " + userInfo.getLastName();
-        String dateOfJoin = "2023/12/12";
+    //    String dateOfJoin = "2023/12/12";
         int numberOfRents = 10;
         
         setOpaque(false);
@@ -64,14 +85,28 @@ public class ClientCard extends RoundJPanel {
         editIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         plusIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        // add event Handler to Plus ICON
+        
         plusIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 assignAppartementMouseClicked(evt,userInfo.getId());
             }
         });
+        
+
+        // add event Handler to Plus ICON
+        deleteIcon.addMouseListener(new java.awt.event.MouseAdapter() {  
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        deleteUserMouseClicked(evt, userInfo);
+        
+    //FETCH ALL USERS AFTER DELETEING
+    
+    
+}
+        
+    }
+        );
         
         panel11.add(editIcon);
         panel11.add(plusIcon);
@@ -83,13 +118,13 @@ public class ClientCard extends RoundJPanel {
         panel1.setBackground(new Color(218,212,212));
         
         
-        this.dateOfJoinLabel = new JLabel("member since : " + dateOfJoin);
-        this.dateOfJoinLabel.setFont(textSmall);
+    /*    this.dateOfJoinLabel = new JLabel("member since : " + dateOfJoin);
+        this.dateOfJoinLabel.setFont(textSmall); */
         this.numberOfRentsLabel = new JLabel("active rents : " + numberOfRents);
         this.numberOfRentsLabel.setFont(textSmall);
         
         panel2.add(numberOfRentsLabel,BorderLayout.WEST);
-        panel2.add(dateOfJoinLabel,BorderLayout.EAST);
+    //    panel2.add(dateOfJoinLabel,BorderLayout.EAST);
         panel2.setBackground(new Color(218,212,212));
         
         informationPanel.add(panel1,BorderLayout.NORTH);
@@ -116,7 +151,36 @@ public class ClientCard extends RoundJPanel {
         overlayDialog.setLocationRelativeTo(this.loginFrame);
         overlayDialog.setVisible(true);
 
-    }                                     
+    }               
+    
+    
+    private void deleteUserMouseClicked(java.awt.event.MouseEvent evt, UserData userInfo) {
+    int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Delete User", JOptionPane.YES_NO_OPTION);
+
+    if (result == JOptionPane.YES_OPTION) {
+        if (UserTableHandler.deleteUser(userInfo.getId())) {
+            // Call the fetchAndUpdateUsers() method directly from the Users class
+            usersPanel.fetchAndUpdateUsers();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error deleting user.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+    
+    private List<UserData> fetchUsers() {
+        try {
+            List<UserData> users = UserTableHandler.getUsers();
+            return users;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+    
+    
     private static ImageIcon scaleImageIcon(ImageIcon icon, int width, int height) {
         Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
