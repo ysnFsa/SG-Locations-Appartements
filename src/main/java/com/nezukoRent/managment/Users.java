@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -122,6 +124,12 @@ public class Users extends javax.swing.JPanel {
         settingIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settingIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/setting_1.png"))); 
         settingIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        settingIcon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    settingActionPerformed(e);
+            }
+        });
         
         jPanel1_2.setLayout(new FlowLayout(FlowLayout.CENTER,20,5));
         jPanel1_2.setBackground(backgroundColor);
@@ -212,6 +220,21 @@ public class Users extends javax.swing.JPanel {
         addBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         addBtn.setPreferredSize(new Dimension(52, 52));
         addBtnPanel.add(addBtn);
+        addBtn.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    addBtnActionPerformed(e);
+       
+                    //FETCH ALL USERS AFTER ADDING A NEW USER
+                    fetchAndUpdateUsers();
+                    
+    }
+    
+                    
+        });
+                    
+            
+        
         // END ADD BTN PANEL
         
         filterPanel.add(sortPanel, BorderLayout.WEST);
@@ -256,7 +279,7 @@ public class Users extends javax.swing.JPanel {
         int division = numberOfClients / COLS_NUMBER;
         int numberOfRows = numberOfClients % COLS_NUMBER != 0 ? division + 1 : division;
         for (UserData user : users) {
-            usersGridPanel.add(new ClientCard(20,this.LoginFrame,user));
+            usersGridPanel.add(new ClientCard(20,this.LoginFrame,user, this));
         }
         /*for (int i = 0 ; i < numberOfClients ; i++) {
             usersGridPanel.add(new ClientCard(20,this.LoginFrame));
@@ -278,6 +301,34 @@ public class Users extends javax.swing.JPanel {
     private void goBackActionPerformed(java.awt.event.MouseEvent evt) {                                         
         this.LoginFrame.showPanel("Home");
     }
+    private void settingActionPerformed(java.awt.event.MouseEvent evt) { 
+    Users.ShowSettings(LoginFrame);
+    }
+    
+    private void addBtnActionPerformed(java.awt.event.MouseEvent evt) { 
+    Users.ShowAddClient(LoginFrame);
+    
+    }
+    
+    public static void ShowSettings(Login frame ){
+     Settings setting = new Settings(frame);
+     JDialog overlayDialog = new JDialog(frame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(setting);
+     overlayDialog.setSize(600, 600);
+     overlayDialog.setLocationRelativeTo(frame);
+     overlayDialog.setVisible(true);
+    }
+    
+    
+    public static void ShowAddClient(Login frame ){
+     AddClient Addclient = new AddClient(frame);
+     JDialog overlayDialog = new JDialog(frame, "Add Client", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(Addclient);
+     overlayDialog.setSize(600, 700);
+     overlayDialog.setLocationRelativeTo(frame);
+     overlayDialog.setVisible(true);
+    }
+    
     
     private List<UserData> fetchUsers() {
         try {
@@ -289,6 +340,30 @@ public class Users extends javax.swing.JPanel {
             return null;
         }
     }
+    
+    public void fetchAndUpdateUsers() {
+    // Clear the existing usersGridPanel
+    usersGridPanel.removeAll();
+    
+    // Fetch the updated users
+    List<UserData> users = fetchUsers();
+    
+    // Add user cards to the usersGridPanel
+    for (UserData user : users) {
+        usersGridPanel.add(new ClientCard(20, this.LoginFrame, user, this));
+    }
+    
+    // Calculate the number of rows for the grid layout
+    int numberOfUsers = users.size();
+    int numberOfRows = (numberOfUsers + 1) / 2;
+    
+    // Set the layout of the usersGridPanel to GridLayout with 2 columns
+    usersGridPanel.setLayout(new GridLayout(numberOfRows, 2, 20, 20));
+    
+    // Revalidate and repaint the usersGridPanel
+    usersGridPanel.revalidate();
+    usersGridPanel.repaint();
+}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
