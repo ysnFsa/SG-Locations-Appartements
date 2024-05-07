@@ -5,6 +5,7 @@
 package com.nezukoRent.managment;
 
 import java.awt.Container;
+import ui.customcomponents.RoundedButton;
 import com.nezukoRent.database.AdminTableHandler;
 
 import javax.swing.*;
@@ -31,6 +32,7 @@ public class Settings extends javax.swing.JPanel {
     
     public Settings(Login login) {
         initComponents();
+        
         this.LoginFrame= login;
     }
     
@@ -51,8 +53,8 @@ public class Settings extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButton3 = new RoundedButton("",30);
+        jButton4 = new RoundedButton("",30);
         jLabel6 = new javax.swing.JLabel();
         jPasswordField3 = new javax.swing.JPasswordField();
         jButton5 = new javax.swing.JButton();
@@ -139,11 +141,11 @@ public class Settings extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addGap(106, 106, 106)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
+                .addGap(55, 55, 55)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 114, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(223, 223, 223)
                 .addComponent(jLabel2)
@@ -173,7 +175,7 @@ public class Settings extends javax.swing.JPanel {
                             .addContainerGap()
                             .addComponent(jLabel3)
                             .addGap(220, 220, 220))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(35, 35, 35))
         );
@@ -223,7 +225,10 @@ public class Settings extends javax.swing.JPanel {
     
         if (choice == JOptionPane.YES_OPTION) {
 
-        closeAllPanels(); }
+        closeAllPanels(); 
+     
+        
+        }
     
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -287,7 +292,7 @@ private boolean updateAdminCredentials(String username, String currentPassword, 
     }
 }
      
-      private void closeAllPanels() {
+     private void closeAllPanels() {
        
         
     Container parent = getParent();
@@ -306,8 +311,27 @@ private boolean updateAdminCredentials(String username, String currentPassword, 
          this.LoginFrame.setResizable(false);
         this.LoginFrame.AdjustSize(500, 600);
         this.LoginFrame.setLocationRelativeTo(null);
-}
+}  
+
+/*private void closeAllPanels(Login loginFrame) {
+    Container parent = getParent();
+    while (parent != null) {
+        if (parent instanceof JDialog) {
+            JDialog dialog = (JDialog) parent;
+            dialog.dispose();
+            dialog.setResizable(false); // Set resizable property to false
+            break; // Exit the loop once the dialog is closed
+        }
+        parent = parent.getParent();
+    }
     
+    loginFrame.showPanel("login");
+    loginFrame.setResizable(false);
+    loginFrame.AdjustSize(500, 600);
+    loginFrame.setLocationRelativeTo(null);
+}*/
+
+     
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
