@@ -168,6 +168,7 @@ public class ClientCard extends RoundJPanel {
     private void editMouseClicked(java.awt.event.MouseEvent evt,UserData userInfo) {                                      
         UserForm editClient = new UserForm(this.loginFrame,  userInfo );
         JDialog overlayDialog = new JDialog(this.loginFrame, "Edit User", Dialog.ModalityType.APPLICATION_MODAL);
+        overlayDialog.setResizable(false);
         overlayDialog.setContentPane(editClient);
         overlayDialog.setSize(600, 700);
         overlayDialog.setLocationRelativeTo(this.loginFrame);

@@ -313,6 +313,7 @@ public class Users extends javax.swing.JPanel {
     public static void ShowSettings(Login frame ){
      Settings setting = new Settings(frame);
      JDialog overlayDialog = new JDialog(frame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setResizable(false);
      overlayDialog.setContentPane(setting);
      overlayDialog.setSize(600, 600);
      overlayDialog.setLocationRelativeTo(frame);
@@ -321,8 +322,10 @@ public class Users extends javax.swing.JPanel {
     
     
     public static void ShowAddClient(Login frame ){
-     AddClient Addclient = new AddClient(frame);
+     UserForm Addclient = new UserForm(frame);
+    // UserForm Addclient = new UserForm(this, userInfo, this);
      JDialog overlayDialog = new JDialog(frame, "Add Client", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setResizable(false);
      overlayDialog.setContentPane(Addclient);
      overlayDialog.setSize(600, 700);
      overlayDialog.setLocationRelativeTo(frame);
