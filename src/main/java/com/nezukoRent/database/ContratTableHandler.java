@@ -6,6 +6,7 @@ package com.nezukoRent.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -47,6 +48,26 @@ public class ContratTableHandler {
         } catch (SQLException e) {
             System.out.println("Error in adding Contart");
             System.out.println(e.getMessage());
+        }
+    }
+    public static boolean isAppartementAvailableFromto(String from,String to,int appartementId) {
+        String sql = "SELECT count(*) as counter FROM Contrat WHERE id_appartement = ? and ((? >= date_debut and ? <= date_fin) or (? >= date_debut and ? <= date_fin))";
+        int counter = 0;
+        try (Connection conn = DBConnect.connect();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setInt(1,appartementId);
+            preparedStatement.setString(2,from);
+            preparedStatement.setString(3,to);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    counter = rs.getInt("counter");
+                }
+            }
+            return counter == 0;
+        } catch (SQLException e) {
+            System.out.println("Error in isAppartementAvailableFromto");
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 }
