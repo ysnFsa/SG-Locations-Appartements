@@ -4,6 +4,7 @@ import com.nezukoRent.database.UserData;
 import com.nezukoRent.database.UserTableHandler;
 import com.nezukoRent.managment.ListAppartements;
 import com.nezukoRent.managment.Login;
+import com.nezukoRent.managment.UserForm;
 import com.nezukoRent.managment.Users;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -94,19 +95,30 @@ public class ClientCard extends RoundJPanel {
         });
         
 
-        // add event Handler to Plus ICON
+        // add event Handler to delete ICON
         deleteIcon.addMouseListener(new java.awt.event.MouseAdapter() {  
     @Override
     public void mouseClicked(java.awt.event.MouseEvent evt) {
         deleteUserMouseClicked(evt, userInfo);
-        
-    //FETCH ALL USERS AFTER DELETEING
     
-    
-}
+      }
         
     }
         );
+        
+        // add event Handler to edit ICON
+        editIcon.addMouseListener(new java.awt.event.MouseAdapter() {  
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        editMouseClicked(evt, userInfo);
+    
+      }
+        
+    }
+        );
+        
+        
+        
         
         panel11.add(editIcon);
         panel11.add(plusIcon);
@@ -153,6 +165,15 @@ public class ClientCard extends RoundJPanel {
 
     }               
     
+    private void editMouseClicked(java.awt.event.MouseEvent evt,UserData userInfo) {                                      
+        UserForm editClient = new UserForm(this.loginFrame,  userInfo );
+        JDialog overlayDialog = new JDialog(this.loginFrame, "Edit User", Dialog.ModalityType.APPLICATION_MODAL);
+        overlayDialog.setContentPane(editClient);
+        overlayDialog.setSize(600, 700);
+        overlayDialog.setLocationRelativeTo(this.loginFrame);
+        overlayDialog.setVisible(true);
+
+    }   
     
     private void deleteUserMouseClicked(java.awt.event.MouseEvent evt, UserData userInfo) {
     int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Delete User", JOptionPane.YES_NO_OPTION);
