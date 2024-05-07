@@ -86,7 +86,7 @@ public class UserTableHandler {
         }
     }
     public static List<UserData> getUsers() {
-        String sql = "SELECT id,firstName,lastName,tele,email,addresse FROM User";
+        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u";
         List<UserData> users = new ArrayList<>();
         try (Connection conn = DBConnect.connect();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -99,7 +99,8 @@ public class UserTableHandler {
                 String tele = rs.getString("tele");
                 String email = rs.getString("email");
                 String addresse = rs.getString("addresse");
-                users.add(new UserData(id, firstName,lastName,tele,email,addresse));
+                int activeRents = rs.getInt("activeRents");
+                users.add(new UserData(id, firstName,lastName,tele,email,addresse,activeRents));
             }
         } catch (SQLException e) {
             System.out.println("Error in fetching Users");
@@ -107,8 +108,54 @@ public class UserTableHandler {
         }
         return users;
     }
+    public static List<UserData> getOrderedUsersByName() {
+        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u ORDER BY firstName,lastName";
+        List<UserData> users = new ArrayList<>();
+        try (Connection conn = DBConnect.connect();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                String tele = rs.getString("tele");
+                String email = rs.getString("email");
+                String addresse = rs.getString("addresse");
+                int activeRents = rs.getInt("activeRents");
+                users.add(new UserData(id, firstName,lastName,tele,email,addresse,activeRents));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in fetching Ordered Users");
+            System.out.println("Error fetching Ordered users: " + e.getMessage());
+        }
+        return users;
+    }
+    public static List<UserData> getOrderedUsersByActiveRents() {
+        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u ORDER BY activeRents DESC";
+        List<UserData> users = new ArrayList<>();
+        try (Connection conn = DBConnect.connect();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                String tele = rs.getString("tele");
+                String email = rs.getString("email");
+                String addresse = rs.getString("addresse");
+                int activeRents = rs.getInt("activeRents");
+                users.add(new UserData(id, firstName,lastName,tele,email,addresse,activeRents));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in fetching Ordered Users");
+            System.out.println("Error fetching Ordered users: " + e.getMessage());
+        }
+        return users;
+    }
     public static UserData getUser(int id) {
-        String sql = "SELECT id,firstName,lastName,tele,addresse,email FROM User WHERE id = ?";
+        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u WHERE id = ?";
         UserData selectedUser = null;
 
         try (Connection conn = DBConnect.connect();
@@ -121,7 +168,8 @@ public class UserTableHandler {
                     String addresse = rs.getString("addresse");
                     String tele = rs.getString("tele");
                     String email = rs.getString("email");
-                    selectedUser = new UserData(id,firstName,lastName,addresse,tele,email);
+                    int activeRents = rs.getInt("activeRents");
+                    selectedUser = new UserData(id,firstName,lastName,addresse,tele,email,activeRents);
                 }
             }
         } catch (SQLException e) {
