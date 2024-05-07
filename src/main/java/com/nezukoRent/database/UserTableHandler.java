@@ -10,7 +10,9 @@ package com.nezukoRent.database;
  */
 
 
+import java.net.URL;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +31,7 @@ public class UserTableHandler {
                     + " email text NOT NULL, \n"
                     + " addresse text NOT NULL \n"
                     + ");";
-        
+
             try (Connection conn = DBConnect.connect();
                 Statement stmt = conn.createStatement()) {
                 stmt.execute(sql);
@@ -128,4 +130,30 @@ public class UserTableHandler {
 
         return selectedUser;
     }
+    
+
+    public static boolean updateUser(int id, String firstName, String lastName, String tele, String email, String addresse) {
+    String sql = "UPDATE User SET firstName = ?, lastName = ?, tele = ?, email = ?, addresse = ? WHERE Id = ?";
+
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, firstName);
+        pstmt.setString(2, lastName);
+        pstmt.setString(3, tele);
+        pstmt.setString(4, email);
+        pstmt.setString(5, addresse);
+        pstmt.setInt(6, id);
+
+        int affectedRows = pstmt.executeUpdate();
+        return affectedRows > 0;
+    } catch (SQLException e) {
+        System.out.println("Error updating user: " + e.getMessage());
+        return false;
+    }
 }
+
+        
+        
+    }
+
