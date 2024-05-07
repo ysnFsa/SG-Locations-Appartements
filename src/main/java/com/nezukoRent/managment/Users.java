@@ -48,6 +48,8 @@ public class Users extends javax.swing.JPanel {
     private JPanel usersGridPanel;
     private JPanel scrollPanelContainer;
     private Login LoginFrame;
+    private boolean areUsersOrdredByName = false;
+    private boolean areUseredOrdredByActiveRents = false;
     
     public Users(Login LoginFrame) {
         FlatLightLaf.setup();
@@ -170,8 +172,8 @@ public class Users extends javax.swing.JPanel {
         GroupLayout buttonsPanelLayout = new GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         
-        filterBtns = new JButton[3];
-        String[] btnsText = {"A - Z","Date","Active Rents"};
+        filterBtns = new JButton[2];
+        String[] btnsText = {"A - Z","Active Rents"};
         
         for (int i = 0 ; i < filterBtns.length ; i++) {
             filterBtns[i] = new JButton();
@@ -182,6 +184,16 @@ public class Users extends javax.swing.JPanel {
             btn.setText(btnsText[i]);
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
+        filterBtns[0].addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aToZActionPerformed(evt);
+            }
+        });
+        filterBtns[1].addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activeRentsActionPerformed(evt);
+            }
+        });
         // COPY PAST CODE HA HAY BOY
         buttonsPanelLayout.setHorizontalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,8 +202,6 @@ public class Users extends javax.swing.JPanel {
                 .addComponent(filterBtns[0])
                 .addGap(15, 15, 15)
                 .addComponent(filterBtns[1])
-                .addGap(15, 15, 15)
-                .addComponent(filterBtns[2])
                 .addGap(0, 68, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
@@ -199,8 +209,7 @@ public class Users extends javax.swing.JPanel {
             .addGroup(buttonsPanelLayout.createSequentialGroup()
                 .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filterBtns[0], javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filterBtns[1], javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filterBtns[2], javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filterBtns[1], javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         sortPanel.add(sortLabel, BorderLayout.WEST);
@@ -343,29 +352,50 @@ public class Users extends javax.swing.JPanel {
             return null;
         }
     }
-    
-    public void fetchAndUpdateUsers() {
-    // Clear the existing usersGridPanel
-    usersGridPanel.removeAll();
-    
-    // Fetch the updated users
-    List<UserData> users = fetchUsers();
-    
-    // Add user cards to the usersGridPanel
-    for (UserData user : users) {
-        usersGridPanel.add(new ClientCard(20, this.LoginFrame, user, this));
+    private List<UserData> fetchOrderedUsersByName() {
+        try {
+            List<UserData> users = UserTableHandler.getOrderedUsersByName();
+            return users;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    
-    // Calculate the number of rows for the grid layout
-    int numberOfUsers = users.size();
-    int numberOfRows = (numberOfUsers + 1) / 2;
-    
-    // Set the layout of the usersGridPanel to GridLayout with 2 columns
-    usersGridPanel.setLayout(new GridLayout(numberOfRows, 2, 20, 20));
-    
-    // Revalidate and repaint the usersGridPanel
-    usersGridPanel.revalidate();
-    usersGridPanel.repaint();
+    private List<UserData> fetchOrderedUsersByActiveRents() {
+        try {
+            List<UserData> users = UserTableHandler.getOrderedUsersByActiveRents();
+            return users;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private void showUsers(List<UserData> users) {
+        usersGridPanel.removeAll(); 
+        int numberOfUsers = users.size();
+        int COLS_NUMBER = 2;
+        int numberOfRows = (numberOfUsers + 1) / 2;
+        for (UserData user : users) {
+            usersGridPanel.add(new ClientCard(20,this.LoginFrame,user,this));
+        }
+        usersGridPanel.setLayout(new GridLayout(numberOfRows,COLS_NUMBER,20,20));
+        usersGridPanel.revalidate();
+        usersGridPanel.repaint();
+    }
+    private void aToZActionPerformed(java.awt.event.ActionEvent evt) {
+        this.areUsersOrdredByName = !this.areUsersOrdredByName;
+        this.showUsers(this.areUsersOrdredByName ? this.fetchOrderedUsersByName() : this.fetchUsers());
+    }  
+    private void activeRentsActionPerformed(java.awt.event.ActionEvent evt) {
+        this.areUseredOrdredByActiveRents = !this.areUseredOrdredByActiveRents;
+        this.showUsers(this.areUseredOrdredByActiveRents ? this.fetchOrderedUsersByActiveRents(): this.fetchUsers());
+    }
+    public void fetchAndUpdateUsers() {
+        // Fetch the updated users
+        List<UserData> users = fetchUsers();
+        this.showUsers(users);
 }
     
     @SuppressWarnings("unchecked")
