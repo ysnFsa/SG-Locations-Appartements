@@ -219,8 +219,8 @@ public class UserForm extends javax.swing.JPanel {
     String firstName = jTextField1.getText();
     String lastName = jTextField4.getText();
     String phone = jTextField3.getText();
-    String address = jTextField5.getText();
-    String email = jTextField2.getText();
+    String address = jTextField2.getText();
+    String email = jTextField5.getText();
 
     if (firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || address.isEmpty() || email.isEmpty()) {
         // Display an error message if any field is empty
