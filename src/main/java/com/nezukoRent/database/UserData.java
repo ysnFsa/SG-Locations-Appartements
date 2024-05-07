@@ -10,15 +10,17 @@ package com.nezukoRent.database;
  */
 public class UserData {
     private int id;
+    private int activeRents;
     private String firstName,lastName,tele,email,addresse;
 
-    public UserData(int id, String firstName, String lastName, String tele, String email, String addresse) {
+    public UserData(int id, String firstName, String lastName, String tele, String email, String addresse,int activeRents) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.tele = tele;
         this.email = email;
         this.addresse = addresse;
+        this.activeRents = activeRents;
     }
 
     public int getId() {
@@ -45,6 +47,10 @@ public class UserData {
         return addresse;
     }
 
+    public int getActiveRents() {
+        return activeRents;
+    }
+    
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
