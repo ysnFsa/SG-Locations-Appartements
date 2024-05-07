@@ -111,6 +111,7 @@ public class ClientCard extends RoundJPanel {
     @Override
     public void mouseClicked(java.awt.event.MouseEvent evt) {
         editMouseClicked(evt, userInfo);
+        usersPanel.fetchAndUpdateUsers();
     
       }
         
@@ -189,19 +190,8 @@ public class ClientCard extends RoundJPanel {
     }
 }
     
-    private List<UserData> fetchUsers() {
-        try {
-            List<UserData> users = UserTableHandler.getUsers();
-            return users;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     
-    
-    
+       
     
     private static ImageIcon scaleImageIcon(ImageIcon icon, int width, int height) {
         Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
