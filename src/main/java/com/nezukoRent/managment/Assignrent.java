@@ -11,7 +11,18 @@ import com.nezukoRent.database.QuartierTableHandler;
 import com.nezukoRent.database.UserData;
 import com.nezukoRent.database.UserTableHandler;
 import com.nezukoRent.database.VilleTableHandler;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
+import javax.swing.JDialog;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  *
@@ -83,6 +94,7 @@ public class Assignrent extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(237, 241, 244));
 
@@ -196,6 +208,10 @@ public class Assignrent extends javax.swing.JPanel {
         jDateChooser2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jDateChooser2.setIcon(null);
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setPreferredSize(new java.awt.Dimension(520, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,8 +264,11 @@ public class Assignrent extends javax.swing.JPanel {
                                     .addComponent(jTextField6)))
                             .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(337, 337, 337)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(339, 339, 339)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(139, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -299,9 +318,11 @@ public class Assignrent extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -315,11 +336,49 @@ public class Assignrent extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String dateDebut = jDateChooser1.getDate().toString();
-        String dateFin = jDateChooser2.getDate().toString();
-        ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
+        String dateDebut = formatDateToYYYYMMDD(jDateChooser1);
+        String dateFin = formatDateToYYYYMMDD(jDateChooser2);
+        if(ContratTableHandler.isAppartementAvailableFromto(dateDebut, dateFin, appartementID)) {
+            ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
+            this.jLabel12.setText("Appartement assigned to the client successfully !");
+            this.jLabel12.setForeground(new java.awt.Color(34, 197, 94));
+            Timer timer = new Timer(5000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cloaseJDialog();
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+        } else {
+            this.jLabel12.setText("The apartment is currently reserved. Please select different dates.");
+            this.jLabel12.setForeground(new Color(255,51,51));
+            Timer timer = new Timer(5000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    hideJlabel2();
+                }
+            });
+            timer.setRepeats(false); 
+            timer.start();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    public static String formatDateToYYYYMMDD(JDateChooser dateChooser) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate selectedDate = dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String formattedDate = selectedDate.format(formatter);
+        
+        return formattedDate;
+    }
+    private void hideJlabel2() {
+        this.jLabel12.setVisible(false);
+    }
+    private void cloaseJDialog() {
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof JDialog) {
+            ((JDialog) window).dispose();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -327,6 +386,7 @@ public class Assignrent extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
