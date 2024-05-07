@@ -12,7 +12,7 @@ import com.nezukoRent.database.QuartierTableHandler;
 import com.nezukoRent.database.VilleData;
 import com.nezukoRent.database.VilleTableHandler;
 import ui.customcomponents.PCards;
-
+import ui.customcomponents.RoundedButton;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -20,7 +20,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -43,21 +42,24 @@ public class Appartements extends javax.swing.JPanel {
      private int villeId ,QrtId;
     public Appartements(Login LoginFrame) {
         this.LoginFrame=LoginFrame;
-        AdjustFrame();
-        prixMin=-1;
-        prixMax=-1;
-        QrtId=-1;
-        surfaceMin=-1;
-        surfaceMax=-1;
-        chmbre=-1;
-        villeF="None";
-        villeId=-1;
+       
+      
         initComponents();
+         
          jPanel4.setLayout(new GridLayout(0, 3,30, 30)); 
         jPanel4.removeAll();  
+          
        // addCardsToGrid(jPanel4 , false);  
+       populateVillesComboBox();
+          resetFilterValues();
+        //resetComboboxes();
+       
         getAPP( false,LoginFrame);
-          populateVillesComboBox();
+        
+          
+           AdjustFrame();
+           // resetFilterValues();
+         
     }
 
     /**
@@ -96,6 +98,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         surfaceComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        jButton7 = new RoundedButton("",30);
 
         jPanel1.setBackground(new java.awt.Color(237, 241, 244));
 
@@ -375,6 +378,16 @@ public class Appartements extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Liberation Mono", 1, 13)); // NOI18N
         jLabel6.setText("surface");
 
+        jButton7.setBackground(new java.awt.Color(109, 145, 129));
+        jButton7.setFont(new java.awt.Font("Liberation Serif", 0, 14)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("reset");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -388,7 +401,7 @@ public class Appartements extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 397, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -397,9 +410,11 @@ public class Appartements extends javax.swing.JPanel {
                         .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(surfaceComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(surfaceComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton7))
+                            .addComponent(jLabel6))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -432,7 +447,9 @@ public class Appartements extends javax.swing.JPanel {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel6)
                                 .addGap(1, 1, 1)
-                                .addComponent(surfaceComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(surfaceComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton7))))))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addContainerGap())
@@ -695,8 +712,39 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
          activeFilter( false,LoginFrame);
     }//GEN-LAST:event_furnishedBtnActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        resetFilterValues();
+        resetComboboxes();
+         activeFilter( false,LoginFrame);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     
+    public void resetFilterValues(){
+         prixMin=-1;
+        prixMax=-1;
+        QrtId=-1;
+        surfaceMin=-1;
+        surfaceMax=-1;
+        chmbre=-1;
+        villeF="None";
+        villeId=-1;
+        this.villeF="None";
+        this.quartierF="None";
+        this.typeF="None";
     
+
+       
+    }
+    
+    public void resetComboboxes(){
+            this.quartierCombobox.setSelectedItem("None");
+        this.chmbrComboBox.setSelectedItem("None");
+        this.prixComboBox.setSelectedItem("None");
+        this.surfaceComboBox1.setSelectedItem("None");
+        this.typeComboBox.setSelectedItem("None");
+            this.villeCombobox.setSelectedItem("None");
+    }
     
     
         private void populateVillesComboBox() {
@@ -800,6 +848,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
         this.LoginFrame.setResizable(true);
         this.LoginFrame.AdjustSize(1400, 800);
         this.LoginFrame.setLocationRelativeTo(null);
+           this.LoginFrame.setVisible(true);
    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -813,6 +862,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
