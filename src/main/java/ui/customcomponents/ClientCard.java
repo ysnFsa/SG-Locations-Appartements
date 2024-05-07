@@ -51,7 +51,7 @@ public class ClientCard extends RoundJPanel {
         
         String fullName = userInfo.getFirstName() + " " + userInfo.getLastName();
     //    String dateOfJoin = "2023/12/12";
-        int numberOfRents = 10;
+        int numberOfRents = userInfo.getActiveRents();
         
         setOpaque(false);
         this.setLayout(new CardLayout(15,15));
