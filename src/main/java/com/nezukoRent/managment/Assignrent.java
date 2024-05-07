@@ -35,8 +35,6 @@ public class Assignrent extends javax.swing.JPanel {
             this.jTextField2.setText(client.getFirstName() + " " + client.getLastName());
             this.jTextField3.setText(client.getTele());
         } 
-        
-        
         AppartementData appartement = AppartementTableHandler.getAppartement(this.appartementID);
         if(appartement != null) {
             this.jTextField4.setText("" + appartement.getId());
@@ -193,12 +191,10 @@ public class Assignrent extends javax.swing.JPanel {
         jDateChooser1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jDateChooser1.setIcon(null);
         jDateChooser1.setInheritsPopupMenu(true);
-        jDateChooser1.setDateFormatString("yyyy-MM-dd");
 
         jDateChooser2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jDateChooser2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jDateChooser2.setIcon(null);
-        jDateChooser2.setDateFormatString("yyyy-MM-dd");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -319,12 +315,9 @@ public class Assignrent extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        jDateChooser1.setDateFormatString("yyyy-MM-dd");
-
         String dateDebut = jDateChooser1.getDate().toString();
         String dateFin = jDateChooser2.getDate().toString();
-       
-       ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
+        ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -454,9 +454,6 @@
         </Property>
         <Property name="inheritsPopupMenu" type="boolean" value="true"/>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jDateChooser1.setDateFormatString(&quot;yyyy-MM-dd&quot;);"/>
-      </AuxValues>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
       <Properties>
@@ -474,9 +471,6 @@
           <ComponentRef name="null"/>
         </Property>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jDateChooser2.setDateFormatString(&quot;yyyy-MM-dd&quot;);"/>
-      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
