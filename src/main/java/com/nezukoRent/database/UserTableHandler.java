@@ -200,6 +200,24 @@ public class UserTableHandler {
         return false;
     }
 }
+    
+     public static int getUserCount() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM User;";
+
+        try (Connection conn = DBConnect.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting user count");
+            System.out.println(e.getMessage());
+        }
+
+        return count;
+    }
 
         
         
