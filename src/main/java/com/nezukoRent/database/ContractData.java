@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.nezukoRent.database;
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 /**
  *
  * @author yassin
@@ -50,6 +53,41 @@ public class ContractData {
     public int getIdAppartement() {
         return idAppartement;
     }
+    
+        public static String formatDate(String dateString , String input , String output) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat(input);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(output);
+        
+        try {
+            Date date = inputFormat.parse(dateString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+         
+            e.printStackTrace();
+            return null;
+        }
+        }
+        
+        public static long calculateDaysDifference(String startDateStr, String endDateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date startDate = sdf.parse(startDateStr);
+            Date endDate = sdf.parse(endDateStr);
+            long diffInMillies = endDate.getTime() - startDate.getTime();
+            return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1; 
+        }
+    }
 
-   
+   @Override
+public String toString() {
+    return "ContractData{" +
+            
+            ", dateDebut='" + dateDebut + '\'' +
+
+            '}';
+}
+
 }
