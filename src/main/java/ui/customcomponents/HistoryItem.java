@@ -4,18 +4,32 @@
  */
 package ui.customcomponents;
 
+import com.nezukoRent.database.ContractData;
+import com.nezukoRent.managment.Login;
+import java.awt.Dialog;
+import javax.swing.JDialog;
+
 /**
  *
  * @author yassin
  */
 public class HistoryItem extends javax.swing.JPanel {
-
+    private ContractData contractData;
     /**
      * Creates new form HistoryItem
      */
+    private Login LoginFrame; 
+    
     public HistoryItem() {
         initComponents();
     }
+    
+   public HistoryItem(Login LoginFrame, ContractData contractData) {
+    initComponents();
+    this.LoginFrame = LoginFrame;
+    this.contractData = contractData; 
+     }
+         
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,11 +79,29 @@ public class HistoryItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:   
+        ShowContract(LoginFrame);
+  
+     //   ShowContract(LoginFrame, contractData);
+    
     }//GEN-LAST:event_jButton1ActionPerformed
-    public void setText(String label){
-        this.jLabel1.setText(label);
-    }
+   public void setText(ContractData contractData) {
+    this.contractData = contractData; // Store contractData
+    StringBuilder label = new StringBuilder();
+    label.append("user ").append(contractData.getIdClient()).append(" Loue appartement ").append(contractData.getIdAppartement());
+    jLabel1.setText(label.toString());
+}
+
+    
+      public static void ShowContract(Login frame) {
+    HistoryDetail Details = new HistoryDetail(frame);
+    JDialog overlayDialog = new JDialog(frame, "Contract", Dialog.ModalityType.APPLICATION_MODAL);
+    overlayDialog.setResizable(false);
+    overlayDialog.setContentPane(Details);
+    overlayDialog.setSize(600, 700);
+    overlayDialog.setLocationRelativeTo(frame);
+    overlayDialog.setVisible(true);
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
