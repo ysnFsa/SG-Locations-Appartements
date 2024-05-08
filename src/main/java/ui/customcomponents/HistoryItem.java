@@ -7,6 +7,7 @@ package ui.customcomponents;
 import com.nezukoRent.database.ContractData;
 import com.nezukoRent.managment.Login;
 import java.awt.Dialog;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 
 /**
@@ -46,7 +47,7 @@ public class HistoryItem extends javax.swing.JPanel {
         setBackground(new java.awt.Color(217, 217, 217));
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
-        jLabel1.setText("user 123 Loue appartement 21");
+        jLabel1.setText("user 123 a Louee appartement 21");
 
         jButton1.setBackground(new java.awt.Color(109, 170, 151));
         jButton1.setText("Details");
@@ -63,7 +64,7 @@ public class HistoryItem extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 527, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 494, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26))
         );
@@ -80,28 +81,24 @@ public class HistoryItem extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:   
-        ShowContract(LoginFrame);
+       
   
      //   ShowContract(LoginFrame, contractData);
     
     }//GEN-LAST:event_jButton1ActionPerformed
    public void setText(ContractData contractData) {
-    this.contractData = contractData; // Store contractData
+    this.contractData = contractData; 
     StringBuilder label = new StringBuilder();
-    label.append("user ").append(contractData.getIdClient()).append(" Loue appartement ").append(contractData.getIdAppartement());
+    label.append("user ").append(contractData.getIdClient()).append(" a Louee appartement ").append(contractData.getIdAppartement());
     jLabel1.setText(label.toString());
 }
+   
+   public JButton getButton(){
+       return this.jButton1;
+   }
 
     
-      public static void ShowContract(Login frame) {
-    HistoryDetail Details = new HistoryDetail(frame);
-    JDialog overlayDialog = new JDialog(frame, "Contract", Dialog.ModalityType.APPLICATION_MODAL);
-    overlayDialog.setResizable(false);
-    overlayDialog.setContentPane(Details);
-    overlayDialog.setSize(600, 700);
-    overlayDialog.setLocationRelativeTo(frame);
-    overlayDialog.setVisible(true);
-}
+  
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
