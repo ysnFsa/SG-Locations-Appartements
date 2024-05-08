@@ -3,22 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.nezukoRent.managment;
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.icons.FlatSearchIcon;
+import com.nezukoRent.database.ContractData;
+import com.nezukoRent.database.ContratTableHandler;
 import ui.customcomponents.HistoryItem;
-import ui.customcomponents.DateHistoryItem;
 import ui.customcomponents.RoundedButton;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import ui.customcomponents.DateHistoryItem;
 
 /**
  *
@@ -31,10 +32,12 @@ public class History extends javax.swing.JPanel {
      */
     private Login LoginFrame;
     public History(Login LoginFrame) {
-        this.LoginFrame= LoginFrame;
-        initComponents();
-        InsertHistory(jPanel3);
-    }
+    this.LoginFrame = LoginFrame;
+    initComponents();
+    List<ContractData> contracts = ContratTableHandler.getAllContracts();
+    InsertHistory(jPanel3, contracts);
+
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,7 +64,11 @@ public class History extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(237, 241, 244));
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setMargin(new java.awt.Insets(4, 30, 4, 2));
+        jTextField1.setPreferredSize(new java.awt.Dimension(180, 40));
+        jTextField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Search");
+        FlatSearchIcon searchIcon = new FlatSearchIcon();
+        jTextField1.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, searchIcon);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -137,11 +144,12 @@ public class History extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -253,62 +261,54 @@ public class History extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-  private void addHistoryEntry(String date, List<String> events) {
-        JPanel datePanel = new JPanel();
-        datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
-        datePanel.setBackground(new Color(237, 241, 244)); // Light gray background
-        datePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding
-
-        JLabel dateLabel = new JLabel(date);
-        dateLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        dateLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        datePanel.add(dateLabel);
-
-        JPanel eventsPanel = new JPanel();
-        eventsPanel.setLayout(new BoxLayout(eventsPanel, BoxLayout.Y_AXIS));
-        eventsPanel.setBackground(new Color(237, 241, 244)); // Same background color
-        for (String event : events) {
-            JLabel eventLabel = new JLabel(event);
-            eventLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            eventLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            eventsPanel.add(eventLabel);
-        }
-
-        datePanel.add(eventsPanel);
-        add(datePanel);
-        add(Box.createRigidArea(new Dimension(0, 5))); // Spacing between entries
-    }
-  
-  public  void InsertHistory(JPanel panel ) {
-    panel.removeAll(); 
+    public void InsertHistory(JPanel panel, List<ContractData> contracts) {
+    panel.removeAll();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-   
-    for (int i = 0; i < 111; i++) { 
-        if(i%10==0){
-        addDateLabel(jPanel3,"12/12/2023");
-        }
-         HistoryItem card = new HistoryItem();
-         panel.setBorder(BorderFactory.createEmptyBorder(50,80, 20, 80)); 
-         panel.add(Box.createVerticalStrut(5));
+    for (ContractData contract : contracts) {
+        HistoryItem card = new HistoryItem();
+        panel.setBorder(BorderFactory.createEmptyBorder(50, 80, 20, 80));
+        panel.add(Box.createVerticalStrut(5));
+        card.setText(contract);
         panel.add(card);
-        
     }
-    
+
     panel.revalidate();
     panel.repaint();
-   
 }
-  public void addDateLabel(JPanel panel , String date){
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    DateHistoryItem dateCard = new DateHistoryItem();
-    dateCard.setDate(date);
-       panel.setBorder(BorderFactory.createEmptyBorder(50,80, 20, 80)); 
-         panel.add(Box.createVerticalStrut(5));
-        panel.add(dateCard);
     
-  }
   
+    
+    /*
+    public void InsertHistory(JPanel panel, List<ContractData> contracts) {
+    panel.removeAll();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+    // Group contracts by start date
+  Map<Date, List<ContractData>> groupedContracts = contracts.stream().collect(Collectors.groupingBy(ContractData::getDateDebut));
+
+    // Iterate over each group
+    for (Map.Entry<Date, List<ContractData>> entry : groupedContracts.entrySet()) {
+        Date dateDebut = entry.getKey();
+
+        // Add date label
+        JLabel dateLabel = new JLabel(new SimpleDateFormat("dd/MM/yyyy").format(dateDebut));
+        panel.add(dateLabel);
+
+        // Iterate over contracts within the group
+        for (ContractData contract : entry.getValue()) {
+            HistoryItem card = new HistoryItem();
+            card.setText(contract);
+            panel.add(card);
+        }
+    }
+
+    // Refresh the UI
+    panel.revalidate();
+    panel.repaint();
+}
+*/
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
