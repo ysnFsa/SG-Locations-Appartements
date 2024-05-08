@@ -9,6 +9,7 @@ import com.nezukoRent.database.UserTableHandler;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import ui.customcomponents.RoundedButton;
@@ -39,6 +40,7 @@ public class UserForm extends javax.swing.JPanel {
    //     addButtonEvent();
         if (userInfo != null) {
             addupdateButton(this);
+            updateText(this);
         }
     
         
@@ -232,7 +234,7 @@ public class UserForm extends javax.swing.JPanel {
         // Update the existing user
         UserTableHandler.updateUser(userInfo.getId(), firstName, lastName, phone, email, address);
         ((JDialog) SwingUtilities.getWindowAncestor(UserForm.this)).dispose();
-        JOptionPane.showMessageDialog(LoginFrame, "User information has been updated successfully!");
+        JOptionPane.showMessageDialog(LoginFrame, "Client information has been updated successfully!");
     //    usersPanel.fetchAndUpdateUsers();
     } else {
         // Add a new user
@@ -263,6 +265,15 @@ public class UserForm extends javax.swing.JPanel {
         editButton.setText("Update");
         Dimension preferredSize = new Dimension(150, 40);
         editButton.setPreferredSize(preferredSize);
+        panel.revalidate();
+        panel.repaint();
+    }
+        
+        public void updateText(JPanel panel) {
+        JLabel editLabel = jLabel1;
+        editLabel.setText("Client Info");
+        Dimension preferredSize = new Dimension(150, 40);
+        editLabel.setPreferredSize(preferredSize);
         panel.revalidate();
         panel.repaint();
     }
