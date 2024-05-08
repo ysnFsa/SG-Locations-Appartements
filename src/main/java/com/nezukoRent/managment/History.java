@@ -7,19 +7,24 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
 import com.nezukoRent.database.ContractData;
 import com.nezukoRent.database.ContratTableHandler;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import ui.customcomponents.HistoryItem;
 import ui.customcomponents.RoundedButton;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import ui.customcomponents.DateHistoryItem;
+import ui.customcomponents.HistoryDetail;
 
 /**
  *
@@ -35,8 +40,12 @@ public class History extends javax.swing.JPanel {
     this.LoginFrame = LoginFrame;
     initComponents();
     List<ContractData> contracts = ContratTableHandler.getAllContracts();
-    InsertHistory(jPanel3, contracts);
-
+    
+    System.out.println("******************************************************");
+    
+     System.out.println(contracts.toString());
+  InsertHistory(jPanel3, contracts);
+ System.out.println("******************************************************");
 }
 
     /**
@@ -49,7 +58,6 @@ public class History extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -58,22 +66,10 @@ public class History extends javax.swing.JPanel {
         jButton7 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
-        jButton6 = new RoundedButton("" , 30);
 
         setBackground(new java.awt.Color(237, 241, 244));
 
         jPanel1.setBackground(new java.awt.Color(237, 241, 244));
-
-        jTextField1.setMargin(new java.awt.Insets(4, 30, 4, 2));
-        jTextField1.setPreferredSize(new java.awt.Dimension(180, 40));
-        jTextField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Search");
-        FlatSearchIcon searchIcon = new FlatSearchIcon();
-        jTextField1.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, searchIcon);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/setting_1.png"))); // NOI18N
         jButton2.setContentAreaFilled(false);
@@ -170,11 +166,6 @@ public class History extends javax.swing.JPanel {
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
         jScrollPane1.setViewportView(jPanel3);
 
-        jButton6.setBackground(new java.awt.Color(109, 145, 129));
-        jButton6.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Clean");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,15 +173,9 @@ public class History extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 475, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6)
-                .addGap(102, 102, 102))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -204,12 +189,8 @@ public class History extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(21, 21, 21)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(55, 55, 55)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -252,74 +233,71 @@ public class History extends javax.swing.JPanel {
 
 
 
-//addButtonToPanel();
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    
 
     public void InsertHistory(JPanel panel, List<ContractData> contracts) {
     panel.removeAll();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-    for (ContractData contract : contracts) {
-        HistoryItem card = new HistoryItem();
-        panel.setBorder(BorderFactory.createEmptyBorder(50, 80, 20, 80));
-        panel.add(Box.createVerticalStrut(5));
-        card.setText(contract);
-        panel.add(card);
+String dateCursor = "";
+for (int i = 0; i < contracts.size(); i++) {
+    final int index=i;
+    if (!contracts.get(i).getDateDebut().equals(dateCursor)) {
+        
+        dateCursor = contracts.get(i).getDateDebut();
+        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
+        datePanel.setOpaque(false); // Make panel transparent
+        JLabel dateLabel = new JLabel("<html><b><font size='5'>" + ContractData.formatDate(dateCursor ,"yyyyMMdd" , "dd/MM/yyyy") + "</font></b></html>");
+        datePanel.add(dateLabel);
+        
+     
+        panel.add(datePanel);
     }
 
-    panel.revalidate();
-    panel.repaint();
-}
-    
-  
-    
-    /*
-    public void InsertHistory(JPanel panel, List<ContractData> contracts) {
-    panel.removeAll();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-    // Group contracts by start date
-  Map<Date, List<ContractData>> groupedContracts = contracts.stream().collect(Collectors.groupingBy(ContractData::getDateDebut));
-
-    // Iterate over each group
-    for (Map.Entry<Date, List<ContractData>> entry : groupedContracts.entrySet()) {
-        Date dateDebut = entry.getKey();
-
-        // Add date label
-        JLabel dateLabel = new JLabel(new SimpleDateFormat("dd/MM/yyyy").format(dateDebut));
-        panel.add(dateLabel);
-
-        // Iterate over contracts within the group
-        for (ContractData contract : entry.getValue()) {
-            HistoryItem card = new HistoryItem();
-            card.setText(contract);
-            panel.add(card);
+    HistoryItem card = new HistoryItem();
+    card.setText(contracts.get(i));
+         JButton button = card.getButton(); 
+    button.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          ShowContract(contracts.get(index)); 
         }
+    });
+    panel.add(card);
+    
+    if (i < contracts.size() - 1) {
+        panel.add(Box.createVerticalStrut(10)); 
     }
-
-    // Refresh the UI
+}
+    
+   
     panel.revalidate();
     panel.repaint();
 }
-*/
+    public  void ShowContract(ContractData card) {
+    HistoryDetail Details = new HistoryDetail(this.LoginFrame , card);
+    JDialog overlayDialog = new JDialog(this.LoginFrame, "Contract", Dialog.ModalityType.APPLICATION_MODAL);
+    overlayDialog.setResizable(false);
+    overlayDialog.setContentPane(Details);
+    overlayDialog.setSize(600, 700);
+    overlayDialog.setLocationRelativeTo(this.LoginFrame);
+    overlayDialog.setVisible(true);
+}
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
