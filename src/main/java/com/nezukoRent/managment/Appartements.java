@@ -12,6 +12,7 @@ import com.nezukoRent.database.QuartierData;
 import com.nezukoRent.database.QuartierTableHandler;
 import com.nezukoRent.database.VilleData;
 import com.nezukoRent.database.VilleTableHandler;
+import java.awt.CardLayout;
 import ui.customcomponents.PCards;
 import ui.customcomponents.RoundedButton;
 import java.awt.Dialog;
@@ -482,9 +483,16 @@ public class Appartements extends javax.swing.JPanel {
 public static void ShowSettings(Login frame ){
        Settings setting = new Settings(frame);
      JDialog overlayDialog = new JDialog(frame, "Settings", Dialog.ModalityType.APPLICATION_MODAL);
-     overlayDialog.setResizable(false);
      overlayDialog.setContentPane(setting);
      overlayDialog.setSize(600, 600);
+     overlayDialog.setLocationRelativeTo(frame);
+     overlayDialog.setVisible(true);
+}
+public static void ShowAnalytics(Login frame ){
+       Analytics analytics = new Analytics(frame);
+     JDialog overlayDialog = new JDialog(frame, "Analytics", Dialog.ModalityType.APPLICATION_MODAL);
+     overlayDialog.setContentPane(analytics);
+     overlayDialog.setSize(1400, 800);
      overlayDialog.setLocationRelativeTo(frame);
      overlayDialog.setVisible(true);
 }
@@ -580,6 +588,8 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        
+              ShowAnalytics(this.LoginFrame);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -11,6 +11,7 @@ import com.nezukoRent.database.VilleData;
 import com.nezukoRent.database.VilleTableHandler;
 import com.nezukoRent.database.QuartierData;
 import com.nezukoRent.database.QuartierTableHandler;
+import static com.nezukoRent.managment.Appartements.ShowAnalytics;
 import ui.customcomponents.RoundedTextField;
 import ui.customcomponents.RoundedLabel;
 import ui.customcomponents.RoundedButton;
@@ -521,6 +522,7 @@ public class AddAppartement extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+          ShowAnalytics(this.LoginFrame);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
