@@ -15,6 +15,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -121,6 +123,19 @@ public class Users extends javax.swing.JPanel {
         searchTextField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Search");
         FlatSearchIcon searchIcon = new FlatSearchIcon();
         searchTextField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, searchIcon);
+        searchTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchActionPerformed(e);
+            }
+            
+        });
         
         settingIcon = new JLabel();
         settingIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -318,6 +333,13 @@ public class Users extends javax.swing.JPanel {
     Users.ShowAddClient(LoginFrame);
     
     }
+    public void searchActionPerformed(java.awt.event.KeyEvent evt) {
+        try {
+            this.showUsers(UserTableHandler.searchUser(this.searchTextField.getText()));
+        } catch(Exception e) {
+            System.out.println("Error in search Action performared");
+        }
+    }
     
     public static void ShowSettings(Login frame ){
      Settings setting = new Settings(frame);
@@ -377,10 +399,11 @@ public class Users extends javax.swing.JPanel {
         int numberOfUsers = users.size();
         int COLS_NUMBER = 2;
         int numberOfRows = (numberOfUsers + 1) / 2;
+        int MIN_ROWS = 4;
         for (UserData user : users) {
             usersGridPanel.add(new ClientCard(20,this.LoginFrame,user,this));
         }
-        usersGridPanel.setLayout(new GridLayout(numberOfRows,COLS_NUMBER,20,20));
+        usersGridPanel.setLayout(new GridLayout(Math.max(MIN_ROWS, numberOfRows),COLS_NUMBER,20,20));
         usersGridPanel.revalidate();
         usersGridPanel.repaint();
     }
