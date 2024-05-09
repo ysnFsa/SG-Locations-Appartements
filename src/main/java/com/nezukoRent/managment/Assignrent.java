@@ -6,6 +6,7 @@ package com.nezukoRent.managment;
 
 import com.nezukoRent.database.AppartementData;
 import com.nezukoRent.database.AppartementTableHandler;
+import com.nezukoRent.database.ContractData;
 import com.nezukoRent.database.ContratTableHandler;
 import com.nezukoRent.database.QuartierTableHandler;
 import com.nezukoRent.database.UserData;
@@ -13,16 +14,17 @@ import com.nezukoRent.database.UserTableHandler;
 import com.nezukoRent.database.VilleTableHandler;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import ui.customcomponents.HistoryDetail;
 
 /**
  *
@@ -32,11 +34,13 @@ public class Assignrent extends javax.swing.JPanel {
 
     private int clientId;
     private int appartementID;
+    private Login loginFrame;
     /**
      * Creates new form Assignrent
      */
-    public Assignrent(int clientId,int appartementID) {
+    public Assignrent(int clientId,int appartementID , Login loginFrame) {
         this.clientId = clientId;
+        this.loginFrame=loginFrame;
         this.appartementID = appartementID;
         initComponents();
         System.out.println("Client ID : " + clientId + ", Appartement ID : " + appartementID);
@@ -193,6 +197,7 @@ public class Assignrent extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Assign");
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -202,7 +207,6 @@ public class Assignrent extends javax.swing.JPanel {
         jDateChooser1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jDateChooser1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jDateChooser1.setIcon(null);
-        jDateChooser1.setInheritsPopupMenu(true);
 
         jDateChooser2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jDateChooser2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -332,24 +336,30 @@ public class Assignrent extends javax.swing.JPanel {
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
+        
+
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int idCntrat=-1;
         String dateDebut = formatDateToYYYYMMDD(jDateChooser1);
         String dateFin = formatDateToYYYYMMDD(jDateChooser2);
         if(ContratTableHandler.isAppartementAvailableFromto(dateDebut, dateFin, appartementID)) {
-            ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
+           idCntrat= ContratTableHandler.addContart(dateDebut, dateFin, clientId, appartementID);
             this.jLabel12.setText("Appartement assigned to the client successfully !");
             this.jLabel12.setForeground(new java.awt.Color(34, 197, 94));
-            Timer timer = new Timer(5000, new ActionListener() {
+            /*Timer timer = new Timer(5000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     cloaseJDialog();
                 }
             });
+            
+            
             timer.setRepeats(false);
-            timer.start();
+            timer.start();*/
+            ShowContract(ContratTableHandler.getContractDataById(idCntrat));
         } else {
             this.jLabel12.setText("The apartment is currently reserved. Please select different dates.");
             this.jLabel12.setForeground(new Color(255,51,51));
@@ -379,6 +389,17 @@ public class Assignrent extends javax.swing.JPanel {
             ((JDialog) window).dispose();
         }
     }
+    
+    
+       public  void ShowContract(ContractData card) {
+    HistoryDetail Details = new HistoryDetail(this.loginFrame , card);
+    JDialog overlayDialog = new JDialog(this.loginFrame, "Contract", Dialog.ModalityType.APPLICATION_MODAL);
+    overlayDialog.setResizable(false);
+    overlayDialog.setContentPane(Details);
+    overlayDialog.setSize(600, 700);
+    overlayDialog.setLocationRelativeTo(this.loginFrame);
+    overlayDialog.setVisible(true);
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateChooser1;

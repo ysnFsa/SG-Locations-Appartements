@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,21 +48,51 @@ public class ContratTableHandler {
             }
         }
     }
-    public static void addContart(String dateDebut,String dateFin,int clientID,int appartementId) {
-        String sql = "INSERT INTO Contrat (date_debut,date_fin,id_client,id_appartement) VALUES (?,?,?,?);";
-        try (Connection conn = DBConnect.connect();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1,dateDebut);
-            preparedStatement.setString(2,dateFin);
-            preparedStatement.setInt(3,clientID);
-            preparedStatement.setInt(4,appartementId);
-            preparedStatement.executeUpdate();
-            System.out.println("Contrat inserted successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error in adding Contart");
-            System.out.println(e.getMessage());
+public static int addContart(String dateDebut, String dateFin, int clientID, int appartementId) {
+    String sql = "INSERT INTO Contrat (date_debut, date_fin, id_client, id_appartement) VALUES (?, ?, ?, ?);";
+    int contratId = -1;
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        preparedStatement.setString(1, dateDebut);
+        preparedStatement.setString(2, dateFin);
+        preparedStatement.setInt(3, clientID);
+        preparedStatement.setInt(4, appartementId);
+        preparedStatement.executeUpdate();
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        if (rs.next()) {
+            contratId = rs.getInt(1);
         }
+        System.out.println("Contrat inserted successfully.");
+    } catch (SQLException e) {
+        System.out.println("Error in adding Contrat");
+        System.out.println(e.getMessage());
     }
+    return contratId;
+}
+
+public static ContractData getContractDataById(int contractId) {
+    String sql = "SELECT * FROM Contrat WHERE id = ?";
+    ContractData contractData = null;
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        preparedStatement.setInt(1, contractId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            String dateDebut = resultSet.getString("date_debut");
+            String dateFin = resultSet.getString("date_fin");
+            int clientId = resultSet.getInt("id_client");
+            int appartementId = resultSet.getInt("id_appartement");
+            contractData = new ContractData(dateDebut, dateFin, clientId, appartementId);
+        }
+    } catch (SQLException e) {
+        System.out.println("Error in retrieving ContractData");
+        System.out.println(e.getMessage());
+    }
+    return contractData;
+}
+
+
+
     public static boolean isAppartementAvailableFromto(String from,String to,int appartementId) {
         String sql = "SELECT count(*) as counter FROM Contrat WHERE id_appartement = ? and ((? >= date_debut and ? <= date_fin) or (? >= date_debut and ? <= date_fin))";
         int counter = 0;
@@ -95,8 +126,26 @@ public class ContratTableHandler {
         }
     }
     
-    
- 
+public static boolean endContract(int contractId) {
+    String sql = "UPDATE Contrat SET date_fin = ? WHERE id = ?";
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String currentDate = sdf.format(new Date());
+        preparedStatement.setString(1, currentDate);
+        preparedStatement.setInt(2, contractId);
+          System.out.println("Error in updating contract end date");
+       int affectedRows = preparedStatement.executeUpdate();
+        return affectedRows > 0; 
+       
+    } catch (SQLException e) {
+        System.out.println("Error in updating contract end date");
+        System.out.println(e.getMessage());
+        return false; 
+    }
+}
+
+
 
 
     public static List<ContractData> getContracts(int months) {

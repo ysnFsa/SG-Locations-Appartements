@@ -14,7 +14,7 @@ public class PhotosData {
     private String path;
     private int appartementId;
     
-    PhotosData(int id , String path , int appartementId){
+    public PhotosData(int id , String path , int appartementId){
         this.id=id;
         this.path=path;
         this.appartementId=appartementId;

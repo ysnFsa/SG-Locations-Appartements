@@ -28,7 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -41,6 +41,17 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.NodeList;
+
 
 /**
  *
@@ -54,6 +65,7 @@ public class AddAppartement extends javax.swing.JPanel {
     private Login LoginFrame;
     private int SelectedVilleId;
     private AppartementData appartement;
+     List<PhotosData> photos;
     public AddAppartement(Login LoginFrame) {
         this.LoginFrame=LoginFrame;
         initComponents();
@@ -68,10 +80,12 @@ public class AddAppartement extends javax.swing.JPanel {
         this.LoginFrame=LoginFrame;
         
         this.appartement=appartement;
+       this.photos = PhotosTableHandler.getPhotos(appartement.getId());
+       this.appartement.setPhotosDataList(photos);
         initComponents();
        
         populateVillesComboBox();
-        initInfo(appartement);
+        initInfo(appartement , false);
         addDeleteButton(jPanel4);
           addFileDlgToLabels();
     }
@@ -124,11 +138,14 @@ public class AddAppartement extends javax.swing.JPanel {
         jButton3 = new RoundedButton("" , 30);
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(237, 241, 244));
         setPreferredSize(new java.awt.Dimension(984, 406));
 
         jPanel2.setBackground(new java.awt.Color(237, 241, 244));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setPreferredSize(new java.awt.Dimension(516, 70));
 
         jButton1.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -144,6 +161,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jButton4.setForeground(new java.awt.Color(192, 192, 192));
         jButton4.setText("Clients");
         jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -211,6 +229,7 @@ public class AddAppartement extends javax.swing.JPanel {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/setting_1.png"))); // NOI18N
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -357,6 +376,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.setLayout(new java.awt.GridLayout(3, 3, 52, 52));
 
         jLabel8.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);
@@ -365,6 +385,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel8);
 
         jLabel9.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel9MouseClicked(evt);
@@ -373,6 +394,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel9);
 
         jLabel12.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel12MouseClicked(evt);
@@ -381,6 +403,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel12);
 
         jLabel13.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel13MouseClicked(evt);
@@ -389,6 +412,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel13);
 
         jLabel14.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel14MouseClicked(evt);
@@ -397,6 +421,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel14);
 
         jLabel15.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel15MouseClicked(evt);
@@ -405,9 +430,11 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel15);
 
         jLabel11.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel3.add(jLabel11);
 
         jLabel17.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel17MouseClicked(evt);
@@ -416,6 +443,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jPanel3.add(jLabel17);
 
         jLabel18.setBackground(new java.awt.Color(153, 153, 0));
+        jLabel18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel18MouseClicked(evt);
@@ -430,6 +458,7 @@ public class AddAppartement extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Likhan", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Ajouter");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -446,6 +475,7 @@ public class AddAppartement extends javax.swing.JPanel {
 
         jLabel10.setForeground(new java.awt.Color(51, 51, 255));
         jLabel10.setText("Gérer Quartiers");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel10MouseClicked(evt);
@@ -454,9 +484,28 @@ public class AddAppartement extends javax.swing.JPanel {
 
         jLabel16.setForeground(new java.awt.Color(51, 51, 255));
         jLabel16.setText("Gérer Villes");
+        jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel16MouseClicked(evt);
+            }
+        });
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/import.png"))); // NOI18N
+        jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/export.png"))); // NOI18N
+        jButton8.setContentAreaFilled(false);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -475,6 +524,10 @@ public class AddAppartement extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6)
+                        .addGap(47, 47, 47)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))))
             .addGroup(layout.createSequentialGroup()
@@ -499,7 +552,10 @@ public class AddAppartement extends javax.swing.JPanel {
                             .addComponent(jLabel16)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton6)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -570,11 +626,11 @@ public class AddAppartement extends javax.swing.JPanel {
         
         //addAppartement( type,  surface,  chambres,  disponibilite,boolean meublee, double prix, int ville_id, int quartier_id)
          System.out.println("quartier id *********: "+ idQuartier + " **** ville id  : "+ villeId);
-      int aprtId= AppartementTableHandler.addAppartement( surface, numChambres, disponible,ismeublee, prix, villeId, idQuartier,descreption,type);
+      int aprtId=  AppartementTableHandler.addAppartement( surface, numChambres, disponible,ismeublee, prix, villeId, idQuartier,descreption,type);
       if(aprtId!=-1) JOptionPane.showMessageDialog(null, "Appartement added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("**************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + aprtId);
            for (Component component : jPanel3.getComponents()) {
-     
+      System.out.println("+++++++Found a label with text: ++++++++");
             if (component instanceof RoundedLabel) {
                 if(((RoundedLabel) component).isImgUpdated()){
                 System.out.println("Found a label with text: " +  ((RoundedLabel) component).getImagePath());
@@ -656,8 +712,8 @@ public class AddAppartement extends javax.swing.JPanel {
     }
     
     
-    public void initInfo(AppartementData appartement){
-      
+    public void initInfo(AppartementData appartement , boolean imported){
+        
         descreptionText.setText(appartement.getDescreption());
         prixInput.setText(String.valueOf(appartement.getPrix()));
         surfaceInput.setText(String.valueOf(appartement.getSurface()));
@@ -672,17 +728,19 @@ public class AddAppartement extends javax.swing.JPanel {
          isMeublee.setSelected(true);
          isDisponible.setSelected(true);
          
-         List<PhotosData> photos = PhotosTableHandler.getPhotos(aprtId);
+        this.photos=appartement.getPhotosDataList();
 
     for (int i = 0; i < photos.size(); i++) {
         PhotosData photoData = photos.get(i);
         if (i < jPanel3.getComponents().length) {
             Component component = jPanel3.getComponents()[i];
             if (component instanceof RoundedLabel) {
+                
                 RoundedLabel label = (RoundedLabel) component;
+                if(imported) label.setImageUpdated(true);
                 String photoPath = photoData.getPath();
                 System.out.println("************ path to  : "+ photoPath + " *******************");
-                label.updateImage(photoPath, true);
+                label.updateImage(photoPath, !imported);
                
                 label.setPhotoData(photoData);
             }
@@ -789,7 +847,7 @@ public class AddAppartement extends javax.swing.JPanel {
              Ville ville = new Ville();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Villes", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(ville);
-     overlayDialog.setSize(430, 490);
+      overlayDialog.setSize(430, 490);
      overlayDialog.setResizable(false);
      overlayDialog.setLocationRelativeTo(this.LoginFrame);
      overlayDialog.setVisible(true);
@@ -846,7 +904,24 @@ public class AddAppartement extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel18MouseClicked
 
-    
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        XMLHandler.generateAndSaveXml(this.appartement  , this.photos);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            // TODO add your handling code here:
+            //  Map<String, Object> dataMap= readXMLFile();
+            this.appartement=XMLHandler.readXMLFile();
+            this.initInfo(appartement , true);
+           // System.out.println(readXMLFile());
+        } catch (Exception ex) {
+            Logger.getLogger(AddAppartement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 public String copyImage(String fullPath) {
     
     
@@ -956,7 +1031,9 @@ if (selectedFile != null && destinationFile != null) {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
