@@ -73,7 +73,7 @@ public class AddAppartement extends javax.swing.JPanel {
         populateVillesComboBox();
        addFileDlgToLabels();
        addButtonEvent();
-       
+        this.jButton8.setEnabled(false);
     }
     
       public AddAppartement(Login LoginFrame , AppartementData appartement) {
@@ -88,6 +88,7 @@ public class AddAppartement extends javax.swing.JPanel {
         initInfo(appartement , false);
         addDeleteButton(jPanel4);
           addFileDlgToLabels();
+          this.jButton6.setEnabled(false);
     }
 
     /**
@@ -574,6 +575,10 @@ public class AddAppartement extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
+        Users user = new Users(this.LoginFrame);
+                   this.LoginFrame.addPanel(user, "users");
+                   this.LoginFrame.showPanel("users");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

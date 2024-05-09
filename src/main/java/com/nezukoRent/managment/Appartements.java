@@ -59,6 +59,7 @@ public class Appartements extends javax.swing.JPanel {
         
           
            AdjustFrame();
+           adjustDesign();
            // resetFilterValues();
          
     }
@@ -605,6 +606,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+                   adjustDesign();
                    AddAppartement addApcard = new AddAppartement(this.LoginFrame);
                    this.LoginFrame.addPanel(addApcard, "addApp");
                    this.LoginFrame.showPanel("addApp");
@@ -618,7 +620,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
        // populateQuartiersComboBox(jComboBox1.getSelectedItem().toString());
        
        
-        
+         
          String selectedVilleName = (String) villeCombobox.getSelectedItem();     
         populateQuartiersComboBox(getVillId(selectedVilleName));
         villeF=selectedVilleName;
@@ -632,7 +634,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
 
     private void quartierComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quartierComboboxActionPerformed
         // TODO add your handling code here:
-        
+       ;
                quartierF= (String)  quartierCombobox.getSelectedItem();     
                
                this.QrtId=QuartierTableHandler.getQuartierId(quartierF, villeId);
@@ -750,7 +752,10 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
-         jPanel4.revalidate();
+        adjustDesign();
+    }//GEN-LAST:event_formComponentResized
+    public static  void adjustDesign(){
+     jPanel4.revalidate();
         jPanel4.repaint();
   jPanel1.revalidate();
         jPanel1.repaint();
@@ -764,8 +769,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
         jScrollPane1.revalidate();
                 jScrollPane1.repaint();
         System.out.println("**************resized");
-    }//GEN-LAST:event_formComponentResized
-
+    }
     
     public void resetFilterValues(){
          prixMin=-1;
@@ -853,6 +857,7 @@ public static void addCardsToGrid(JPanel panel  , boolean isListCard) {
     
     
     public void activeFilter(boolean isListCard , Login LoginFrame){
+         adjustDesign();
         jPanel4.removeAll(); 
   
     jPanel4.revalidate();

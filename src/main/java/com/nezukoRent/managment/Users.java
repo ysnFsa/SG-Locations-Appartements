@@ -22,7 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -31,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import ui.customcomponents.ClientCard;
 import ui.customcomponents.Header;
+import ui.customcomponents.RoundedButton;
 
 
 public class Users extends javax.swing.JPanel {
@@ -80,15 +80,7 @@ public class Users extends javax.swing.JPanel {
         jPanel1_1_1 = new JPanel(new FlowLayout(FlowLayout.LEADING,30,0));
         jPanel1_1_1.setBackground(backgroundColor);
         
-        goBackIcon = new JLabel();
-        goBackIcon.setIcon(new ImageIcon(getClass().getResource("/icons/baseline_keyboard_arrow_right_24px.png")));
-        goBackIcon.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
-        goBackIcon.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    goBackActionPerformed(e);
-            }
-        });
+       
         Font navLinkFont = new Font("Liberation Sans", 0, 18); 
         appartementsLabel = new JLabel();
         appartementsLabel.setFont(navLinkFont);
@@ -98,7 +90,9 @@ public class Users extends javax.swing.JPanel {
         appartementsLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    Appartements.adjustDesign();
                     goBackActionPerformed(e);
+                    
             }
         });
         
@@ -196,18 +190,18 @@ public class Users extends javax.swing.JPanel {
         sortLabel.setFont(new java.awt.Font("Segoe UI", 1, 15));
         sortLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         sortLabel.setText("Sort : ");
-        sortLabel.setPreferredSize(new Dimension(42, 20));
+        sortLabel.setPreferredSize(new Dimension(82, 20));
         // buttons : 
         buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,25,0));
         buttonsPanel.setBackground(backgroundColor);
         GroupLayout buttonsPanelLayout = new GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         
-        filterBtns = new JButton[2];
+        filterBtns = new RoundedButton[2];
         String[] btnsText = {"A - Z","Active Rents"};
         
         for (int i = 0 ; i < filterBtns.length ; i++) {
-            filterBtns[i] = new JButton();
+            filterBtns[i] = new RoundedButton("" , 30);
             JButton btn = filterBtns[i];
             btn.setBackground(i == 0 ? new Color(0,0,0) : new Color(109, 145, 129));
             btn.setFont(new Font("Segoe UI", 1, 12)); 
@@ -251,7 +245,7 @@ public class Users extends javax.swing.JPanel {
         addBtnPanel = new JPanel(new CardLayout(20, 20));
         addBtnPanel.setBackground(backgroundColor);
         
-        addBtn = new JButton();
+        addBtn = new RoundedButton("" , 30);
         addBtn.setBackground(new Color(109, 145, 129));
         addBtn.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
         addBtn.setForeground(new Color(255, 255, 255));
@@ -310,7 +304,7 @@ public class Users extends javax.swing.JPanel {
         
         scrollPanelContainer = new JPanel(new CardLayout(10,10)); // PANEL 13
         scrollPanelContainer.setBackground(backgroundColor);
-        
+        scrollPanel.getVerticalScrollBar().setUnitIncrement(16); 
         usersGridPanel = new JPanel();
         usersGridPanel.setBackground(backgroundColor);
         List<UserData> users = fetchUsers();
