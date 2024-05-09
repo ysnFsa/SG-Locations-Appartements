@@ -19,7 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import ui.customcomponents.PCardForAssignAppartementToClient;
-import ui.customcomponents.PCards;
+import ui.customcomponents.PCardForRetireAppartementFromClient;
 import ui.customcomponents.RoundedButton;
 
 /**
@@ -30,6 +30,7 @@ public class ListAppartements extends javax.swing.JPanel {
 
     private Login loginFrame;
     private int clientId;
+    private boolean isItListOfAppartementOfAClient;
     
      private String villeF , quartierF , typeF ;
      private int prixMin, prixMax  , surfaceMin , surfaceMax, chmbre;
@@ -46,7 +47,12 @@ public class ListAppartements extends javax.swing.JPanel {
         populateVillesComboBox();
           resetFilterValues();
     }
-
+    public ListAppartements(Login loginFrame, int clientId,boolean isItListOfAppartementOfAClient) {
+        this.loginFrame = loginFrame;
+        this.clientId = clientId;
+        this.isItListOfAppartementOfAClient = isItListOfAppartementOfAClient;
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,11 +67,29 @@ public class ListAppartements extends javax.swing.JPanel {
             return null;
         }
     }
+    private List<AppartementData> fetchAppartementsOfTheClient() {
+        try {
+            List<AppartementData> appartements = AppartementTableHandler.getAppartementsOfAClient(clientId); 
+            return appartements;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     private void showFetchedAppartements(List<AppartementData> appartements) {
         for (AppartementData appartement : appartements) {
-                PCardForAssignAppartementToClient card = new PCardForAssignAppartementToClient(this.loginFrame,this.clientId,appartement); 
-                this.jPanel7.add(card);
+                if(this.isItListOfAppartementOfAClient) {
+                    this.jPanel7.add(new PCardForRetireAppartementFromClient(this.loginFrame,this.clientId,appartement,this));
+                } else {
+                    this.jPanel7.add(new PCardForAssignAppartementToClient(this.loginFrame,this.clientId,appartement));
+                }
         }
+    }
+    public void updateListAppartements() {
+        this.jPanel7.removeAll();
+        showFetchedAppartements(fetchAppartementsOfTheClient());
+        this.jPanel7.revalidate();
+        this.jPanel7.repaint();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
