@@ -10,10 +10,6 @@ package com.nezukoRent.database;
  */
 
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "appartement")
 
 public class AppartementData {
     private int id;
@@ -97,7 +93,7 @@ public class AppartementData {
     return this.descreption;
 }
     
-       @XmlElement(name = "photos")
+    
     public List<PhotosData> getPhotosDataList() {
         return photosDataList;
     }
