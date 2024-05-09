@@ -776,7 +776,7 @@ public class AddAppartement extends javax.swing.JPanel {
                Quartier quartier = new Quartier();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Quartiers", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(quartier);
-     overlayDialog.setSize(400, 450);
+     overlayDialog.setSize(420, 490);
      overlayDialog.setResizable(false);
      overlayDialog.setLocationRelativeTo(this.LoginFrame);
      overlayDialog.setVisible(true);
@@ -789,7 +789,7 @@ public class AddAppartement extends javax.swing.JPanel {
              Ville ville = new Ville();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Villes", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(ville);
-     overlayDialog.setSize(400, 450);
+     overlayDialog.setSize(430, 490);
      overlayDialog.setResizable(false);
      overlayDialog.setLocationRelativeTo(this.LoginFrame);
      overlayDialog.setVisible(true);
