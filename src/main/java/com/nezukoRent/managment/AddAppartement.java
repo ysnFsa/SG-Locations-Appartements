@@ -493,6 +493,7 @@ public class AddAppartement extends javax.swing.JPanel {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/import.png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -501,6 +502,7 @@ public class AddAppartement extends javax.swing.JPanel {
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/export.png"))); // NOI18N
         jButton8.setContentAreaFilled(false);
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -832,7 +834,7 @@ public class AddAppartement extends javax.swing.JPanel {
                Quartier quartier = new Quartier();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Quartiers", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(quartier);
-     overlayDialog.setSize(400, 450);
+     overlayDialog.setSize(420, 490);
      overlayDialog.setResizable(false);
      overlayDialog.setLocationRelativeTo(this.LoginFrame);
      overlayDialog.setVisible(true);
@@ -845,7 +847,7 @@ public class AddAppartement extends javax.swing.JPanel {
              Ville ville = new Ville();
      JDialog overlayDialog = new JDialog(this.LoginFrame, "Gérer Villes", Dialog.ModalityType.APPLICATION_MODAL);
      overlayDialog.setContentPane(ville);
-     overlayDialog.setSize(400, 450);
+      overlayDialog.setSize(430, 490);
      overlayDialog.setResizable(false);
      overlayDialog.setLocationRelativeTo(this.LoginFrame);
      overlayDialog.setVisible(true);

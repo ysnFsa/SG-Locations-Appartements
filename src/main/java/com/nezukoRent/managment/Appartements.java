@@ -278,6 +278,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton7.setFont(new java.awt.Font("Liberation Serif", 0, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("reset");
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
