@@ -111,6 +111,7 @@ public class Appartements extends javax.swing.JPanel {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/setting_1.png"))); // NOI18N
         jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -119,6 +120,7 @@ public class Appartements extends javax.swing.JPanel {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/history.png"))); // NOI18N
         jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -131,6 +133,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         jButton1.setText("Appartements");
         jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -141,6 +144,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton4.setForeground(new java.awt.Color(192, 192, 192));
         jButton4.setText("Clients");
         jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -151,6 +155,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton5.setForeground(new java.awt.Color(192, 192, 192));
         jButton5.setText("Analytics");
         jButton5.setContentAreaFilled(false);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -402,6 +407,7 @@ public class Appartements extends javax.swing.JPanel {
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add_inactive_ysn.png"))); // NOI18N
         jButton6.setBorderPainted(false);
         jButton6.setContentAreaFilled(false);
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);

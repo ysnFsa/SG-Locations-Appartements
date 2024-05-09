@@ -6,6 +6,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
 import com.nezukoRent.database.UserData;
 import com.nezukoRent.database.UserTableHandler;
+import static com.nezukoRent.managment.Appartements.ShowAnalytics;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -63,11 +64,11 @@ public class Users extends javax.swing.JPanel {
         // START HEADER 
         header = new Header();
         header.setBackground(backgroundColor);
-        header.setLayout(new CardLayout(20,0));
+        header.setLayout(new CardLayout(0,25));
         
         jpanel1 = new javax.swing.JPanel();
         jpanel1.setBackground(backgroundColor);
-        jpanel1.setPreferredSize(new java.awt.Dimension(903, 45));
+        //jpanel1.setPreferredSize(new java.awt.Dimension(903, 45));
         jpanel1.setLayout(new BorderLayout());
         jpanel1.setSize(getWidth(), 50);
         
@@ -94,10 +95,16 @@ public class Users extends javax.swing.JPanel {
         appartementsLabel.setForeground(new Color(192, 192, 192));
         appartementsLabel.setText("Appartements");
         appartementsLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        appartementsLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    goBackActionPerformed(e);
+            }
+        });
         
         usersLabel = new JLabel();
         usersLabel.setFont(navLinkFont); 
-        usersLabel.setText("Users");
+        usersLabel.setText("Clients");
         usersLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         analyticsLabel = new JLabel();
@@ -105,8 +112,14 @@ public class Users extends javax.swing.JPanel {
         analyticsLabel.setForeground(new Color(192, 192, 192));
         analyticsLabel.setText("Analytics");
         analyticsLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        analyticsLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                    showAnalytics();
+                }
+        });
         
-        jPanel1_1_1.add(goBackIcon);
+        //jPanel1_1_1.add(goBackIcon);
         jPanel1_1_1.add(appartementsLabel);
         jPanel1_1_1.add(usersLabel);
         jPanel1_1_1.add(analyticsLabel);
@@ -153,9 +166,12 @@ public class Users extends javax.swing.JPanel {
         jPanel1_2.add(searchTextField);
         jPanel1_2.add(settingIcon);
         
+        JPanel panel125 = new JPanel(new CardLayout(65,0));
+        panel125.add(jPanel1_1);
+        
         // END JPANEL 1_2
         
-        jpanel1.add(jPanel1_1, BorderLayout.WEST);
+        jpanel1.add(panel125, BorderLayout.WEST);
         jpanel1.add(jPanel1_2, BorderLayout.EAST);
         
         header.add(jpanel1, BorderLayout.CENTER);
@@ -420,7 +436,9 @@ public class Users extends javax.swing.JPanel {
         List<UserData> users = fetchUsers();
         this.showUsers(users);
 }
-    
+    public void showAnalytics() {
+        ShowAnalytics(this.LoginFrame);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
