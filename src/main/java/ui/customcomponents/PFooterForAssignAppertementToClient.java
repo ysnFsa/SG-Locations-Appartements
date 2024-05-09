@@ -128,7 +128,7 @@ public class PFooterForAssignAppertementToClient extends RoundedPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Assignrent assignToClientForum = new Assignrent(clientId,this.appartement.getId());
+        Assignrent assignToClientForum = new Assignrent(clientId,this.appartement.getId() , this.LoginFrame);
         JDialog overlayDialog = new JDialog(this.LoginFrame, "info de client", Dialog.ModalityType.APPLICATION_MODAL);
         overlayDialog.setContentPane(assignToClientForum);
         overlayDialog.setSize(950, 623);

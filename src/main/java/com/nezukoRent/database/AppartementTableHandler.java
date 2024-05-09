@@ -13,7 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AppartementTableHandler {
@@ -334,10 +337,56 @@ public static List<AppartementData> getAllAppartementsFiltered(Integer villeid, 
         } catch (SQLException e) {
             System.out.println("Error fetching Appartement : " + e.getMessage());
         }
-
+         System.out.println("AAAAAAAPPP : " + selectedAppartement);
         return selectedAppartement;
     }
-    public static List<AppartementData> getAppartementsOfAClient(int clientID) {
+public static List<AppartementData> getAppartementsOfAClient(int clientID) {
+        List<AppartementData> appartements = new ArrayList<>();
+        String sql = "SELECT a.id, type, surface, chambres, disponibilite, prix, ville_id, description, quartier_id, c.id as contratID " +
+                     "FROM Appartement a " +
+                     "INNER JOIN Contrat c ON c.id_appartement = a.id " +
+                     "WHERE c.id_client = ? AND date_fin > ?";
+
+        try (Connection conn = DBConnect.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // Set client ID
+            pstmt.setInt(1, clientID);
+            
+            // Calculate yesterday's date
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 0);
+            Date yesterday = cal.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String yesterdayStr = sdf.format(yesterday);
+
+            // Set yesterday's date as parameter
+            pstmt.setString(2, yesterdayStr);
+
+            // Execute query
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String type = rs.getString("type");
+                    double surface = rs.getDouble("surface");
+                    int chambres = rs.getInt("chambres");
+                    boolean disponibilite = rs.getBoolean("disponibilite");
+                    double prix = rs.getDouble("prix");
+                    int ville_id = rs.getInt("ville_id");
+                    int quartier_id = rs.getInt("quartier_id");
+                    String description = rs.getString("description");
+                    int contratID = rs.getInt("contratID");
+                    appartements.add(new AppartementData(id, type, surface, chambres, disponibilite, prix, ville_id, quartier_id, description, contratID));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching appartements of the client : " + e.getMessage());
+        }
+         System.out.println("AAAAAAAPPP : " + appartements);
+        return appartements;
+    }
+
+
+    public static List<AppartementData> getAppartementsOfAClient1(int clientID) {
         String sql = "SELECT a.id, type, surface, chambres, disponibilite, prix, ville_id,description, quartier_id,c.id as cotratID FROM Appartement a,Contrat c WHERE c.id_client = ? and c.id_appartement = a.id";
         List<AppartementData> appartements = new ArrayList<>();
         
@@ -364,7 +413,6 @@ public static List<AppartementData> getAllAppartementsFiltered(Integer villeid, 
         }
         return appartements;
     }
-      
       
       
 }

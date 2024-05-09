@@ -135,7 +135,8 @@ public class PFooterForRetireAppertementToClient extends RoundedPanel {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to retitre this appartement from the client?", "Retire Appartement", JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION) {
-            if (ContratTableHandler.deleteContrat(this.contratID)) {
+            if (ContratTableHandler.endContract(this.contratID)) {
+                 System.out.println("success in updating contract end datssssse");
                 this.listAppartements.updateListAppartements();
             } else {
                 JOptionPane.showMessageDialog(this, "Error Retirement apppartement from a client.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -10,13 +10,13 @@ package com.nezukoRent.database;
  */
 
 
-import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,25 +86,31 @@ public class UserTableHandler {
         }
     }
     public static List<UserData> getUsers() {
-        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate tmpToday = LocalDate.now();
+        String todayFormatted = tmpToday.format(formatter);
+        String sql = "SELECT id, firstName, lastName, tele, email, addresse, " +
+                     "(SELECT COUNT(*) FROM contrat WHERE id_client = u.id AND date_fin > ?) AS activeRents " +
+                     "FROM User u";
+
         List<UserData> users = new ArrayList<>();
         try (Connection conn = DBConnect.connect();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            ResultSet rs = preparedStatement.executeQuery()) {
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
-                String tele = rs.getString("tele");
-                String email = rs.getString("email");
-                String addresse = rs.getString("addresse");
-                int activeRents = rs.getInt("activeRents");
-                users.add(new UserData(id, firstName,lastName,tele,email,addresse,activeRents));
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, todayFormatted);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("firstName");
+                    String lastName = rs.getString("lastName");
+                    String tele = rs.getString("tele");
+                    String email = rs.getString("email");
+                    String addresse = rs.getString("addresse");
+                    int activeRents = rs.getInt("activeRents");
+                    users.add(new UserData(id, firstName, lastName, tele, email, addresse, activeRents));
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Error in fetching Users");
-            System.out.println("Error fetching users: " + e.getMessage());
+            System.out.println("Error in fetching Users: " + e.getMessage());
         }
         return users;
     }
