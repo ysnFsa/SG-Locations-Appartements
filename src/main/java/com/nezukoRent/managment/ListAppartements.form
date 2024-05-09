@@ -355,6 +355,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="reset"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
@@ -384,7 +387,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="jPanel7.setLayout(new GridLayout(0, 2,30, 30));&#xa;&#xa;    jPanel7.removeAll();  &#xa;    List&lt;AppartementData&gt; appartements = fetchAppartements();&#xa;    showFetchedAppartements(appartements);&#xa;        &#xa;    jPanel7.revalidate();&#xa;    jPanel7.repaint();&#xa;jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);&#xa;jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);"/>
+            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="jPanel7.setLayout(new GridLayout(0, 2,30, 30));&#xa;&#xa;    jPanel7.removeAll();  &#xa;List&lt;AppartementData&gt; appartements;&#xa;if(this.isItListOfAppartementOfAClient){&#xa;appartements=this.fetchAppartementsOfTheClient();&#xa;}else{&#xa; appartements= fetchAppartements();&#xa; &#xa;}&#xa;&#xa;    showFetchedAppartements(appartements);&#xa;        &#xa;    jPanel7.revalidate();&#xa;    jPanel7.repaint();&#xa;jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);&#xa;jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);"/>
           </AuxValues>
 
           <Layout>
