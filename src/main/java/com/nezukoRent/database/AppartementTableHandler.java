@@ -337,7 +337,33 @@ public static List<AppartementData> getAllAppartementsFiltered(Integer villeid, 
 
         return selectedAppartement;
     }
-
+    public static List<AppartementData> getAppartementsOfAClient(int clientID) {
+        String sql = "SELECT a.id, type, surface, chambres, disponibilite, prix, ville_id,description, quartier_id,c.id as cotratID FROM Appartement a,Contrat c WHERE c.id_client = ? and c.id_appartement = a.id";
+        List<AppartementData> appartements = new ArrayList<>();
+        
+        try (Connection conn = DBConnect.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, clientID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String type = rs.getString("type");
+                    double surface = rs.getDouble("surface");
+                    int chambres = rs.getInt("chambres");
+                    boolean disponibilite = rs.getBoolean("disponibilite");
+                    double prix = rs.getDouble("prix");
+                    int ville_id = rs.getInt("ville_id");
+                    int quartier_id = rs.getInt("quartier_id");
+                    String descreption= rs.getString("description");
+                    int contratID = rs.getInt("cotratID");
+                    appartements.add(new AppartementData(id, type, surface, chambres, disponibilite, prix, ville_id, quartier_id,descreption,contratID));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching appartements of the client : " + e.getMessage());
+        }
+        return appartements;
+    }
       
       
       
