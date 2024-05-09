@@ -218,7 +218,29 @@ public class UserTableHandler {
 
         return count;
     }
-
+     public static List<UserData> searchUser(String searchValue) {
+        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents,(firstName || lastName) as name FROM User u WHERE name LIKE ?";
+        List<UserData> users = new ArrayList<>();
+        try (Connection conn = DBConnect.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,"%" + searchValue + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("firstName");
+                    String lastName = rs.getString("lastName");
+                    String tele = rs.getString("tele");
+                    String email = rs.getString("email");
+                    String addresse = rs.getString("addresse");
+                    int activeRents = rs.getInt("activeRents");
+                    users.add(new UserData(id, firstName,lastName,tele,email,addresse,activeRents));
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println("Error fetching searched users by name : " + e.getMessage());
+        }
+        return users;
+    }
         
         
     }
