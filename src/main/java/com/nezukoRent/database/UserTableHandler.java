@@ -90,7 +90,7 @@ public class UserTableHandler {
         LocalDate tmpToday = LocalDate.now();
         String todayFormatted = tmpToday.format(formatter);
         String sql = "SELECT id, firstName, lastName, tele, email, addresse, " +
-                     "(SELECT COUNT(*) FROM contrat WHERE id_client = u.id AND date_fin > ?) AS activeRents " +
+                        "(SELECT COUNT(*) FROM contrat WHERE id_client = u.id AND date_fin > ?) AS activeRents " +
                      "FROM User u";
 
         List<UserData> users = new ArrayList<>();
@@ -137,13 +137,17 @@ public class UserTableHandler {
         }
         return users;
     }
-    public static List<UserData> getOrderedUsersByActiveRents() {
-        String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u ORDER BY activeRents DESC";
-        List<UserData> users = new ArrayList<>();
-        try (Connection conn = DBConnect.connect();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            ResultSet rs = preparedStatement.executeQuery()) {
-
+public static List<UserData> getOrderedUsersByActiveRents() {
+    LocalDate tmpToday = LocalDate.now();
+    String todayFormatted = tmpToday.format(ContratTableHandler.formatter);
+    String sql = "SELECT id, firstName, lastName, tele, email, addresse, " +
+                 "(SELECT COUNT(*) FROM contrat WHERE id_client = u.id AND date_fin > ?) AS activeRents " +
+                 "FROM User u ORDER BY activeRents DESC";
+    List<UserData> users = new ArrayList<>();
+    try (Connection conn = DBConnect.connect();
+         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        preparedStatement.setString(1, todayFormatted);
+        try (ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("firstName");
@@ -152,14 +156,16 @@ public class UserTableHandler {
                 String email = rs.getString("email");
                 String addresse = rs.getString("addresse");
                 int activeRents = rs.getInt("activeRents");
-                users.add(new UserData(id, firstName,lastName,tele,email,addresse,activeRents));
+                users.add(new UserData(id, firstName, lastName, tele, email, addresse, activeRents));
             }
-        } catch (SQLException e) {
-            System.out.println("Error in fetching Ordered Users");
-            System.out.println("Error fetching Ordered users: " + e.getMessage());
         }
-        return users;
+    } catch (SQLException e) {
+        System.out.println("Error in fetching Ordered Users");
+        System.out.println("Error fetching Ordered users: " + e.getMessage());
     }
+    return users;
+}
+
     public static UserData getUser(int id) {
         String sql = "SELECT id,firstName,lastName,tele,email,addresse,(SELECT count(*) from contrat WHERE id_client = u.id) as activeRents FROM User u WHERE id = ?";
         UserData selectedUser = null;
