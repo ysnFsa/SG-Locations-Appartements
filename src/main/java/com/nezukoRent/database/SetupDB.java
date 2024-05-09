@@ -29,7 +29,7 @@ public class SetupDB {
                 AppartementTableHandler.createTable();
                 PhotosTableHandler.createTable();
                 UserTableHandler.createUserTable();
-                ContratTableHandler.createContratTable();
+              ContratTableHandler.createContratTable();
             }
              
           public static void dropTable(String tableName) {

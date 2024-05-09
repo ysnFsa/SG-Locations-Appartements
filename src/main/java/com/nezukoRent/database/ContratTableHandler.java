@@ -155,7 +155,7 @@ public static List<ContractData> getActiveContracts() {
     
 public static List<ContractData> getAllContracts() {
     List<ContractData> allContracts = new ArrayList<>();
-    String sql = "SELECT * FROM Contrat";
+    String sql = "SELECT * FROM Contrat ORDER BY date_debut DESC";
     
     try (Connection conn = DBConnect.connect();
          PreparedStatement pstmt = conn.prepareStatement(sql);
