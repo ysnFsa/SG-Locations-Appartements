@@ -1,7 +1,7 @@
 package ui.customcomponents;
 
 import com.nezukoRent.database.AppartementData;
-import com.nezukoRent.database.AppartementTableHandler;
+import com.nezukoRent.database.QuartierTableHandler;
 import com.nezukoRent.database.VilleTableHandler;
 import com.nezukoRent.managment.Assignrent;
 import com.nezukoRent.managment.Login;
@@ -63,7 +63,7 @@ public class PFooterForAssignAppertementToClient extends RoundedPanel {
         jLabel5.setIconTextGap(1);
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
-        jLabel4.setText("quartier:salam");
+        jLabel4.setText("quartier: " + QuartierTableHandler.getquartierNameById(this.appartement.getQuartierId()));
         jLabel4.setIconTextGap(1);
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
