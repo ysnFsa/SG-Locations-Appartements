@@ -78,6 +78,7 @@ public class ClientCard extends RoundJPanel {
         JLabel editIcon = new JLabel(scaleImageIcon(new ImageIcon(getClass().getResource("/icons/edit.png")),30,30));
         JLabel plusIcon = new JLabel(scaleImageIcon(new ImageIcon(getClass().getResource("/icons/add_32inactive32.png")),30,30));
         JLabel deleteIcon = new JLabel(scaleImageIcon(new ImageIcon(getClass().getResource("/icons/wast_basket.png")),28,28));
+        JLabel retireAppartementIcon = new JLabel(scaleImageIcon(new ImageIcon(getClass().getResource("/icons/minus.png")),28,28));
         
         editIcon.setSize(new Dimension(30,30));
         plusIcon.setSize(new Dimension(30,30));
@@ -86,6 +87,7 @@ public class ClientCard extends RoundJPanel {
         editIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         plusIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        retireAppartementIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         
         plusIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -93,7 +95,12 @@ public class ClientCard extends RoundJPanel {
                 assignAppartementMouseClicked(evt,userInfo.getId());
             }
         });
-        
+        retireAppartementIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                retireAppartementMouseClicked(evt,userInfo.getId());
+            }
+        });
 
         // add event Handler to delete ICON
         deleteIcon.addMouseListener(new java.awt.event.MouseAdapter() {  
@@ -123,6 +130,7 @@ public class ClientCard extends RoundJPanel {
         
         panel11.add(editIcon);
         panel11.add(plusIcon);
+        panel11.add(retireAppartementIcon);
         panel11.add(deleteIcon);
         panel11.setBackground(new Color(218,212,212));
         
@@ -188,7 +196,16 @@ public class ClientCard extends RoundJPanel {
             JOptionPane.showMessageDialog(this, "Error deleting user.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
 }
+    private void retireAppartementMouseClicked(java.awt.event.MouseEvent evt,int clientId) {
+        ListAppartements desAppartements = new ListAppartements(this.loginFrame,clientId,true);
+        JDialog overlayDialog = new JDialog(this.loginFrame, "Retire appartement", Dialog.ModalityType.APPLICATION_MODAL);
+        overlayDialog.setContentPane(desAppartements);
+        overlayDialog.setSize(950, 623);
+        overlayDialog.setLocationRelativeTo(this.loginFrame);
+        overlayDialog.setVisible(true);
+    }
     
     
        
