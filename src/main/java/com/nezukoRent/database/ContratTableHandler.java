@@ -82,6 +82,18 @@ public class ContratTableHandler {
             return false;
         }
     }
+    public static boolean deleteContrat(int contratID) {
+        String sql = "DELETE FROM Contrat WHERE id = ?";
+        try (Connection conn = DBConnect.connect(); 
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setInt(1, contratID);
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0; 
+        } catch (SQLException e) {
+                System.out.println("Err deleting Contrat : " + e.getMessage());
+            return false; 
+        }
+    }
     
     
  
