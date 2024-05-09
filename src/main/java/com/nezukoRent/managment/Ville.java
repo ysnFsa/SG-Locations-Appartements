@@ -175,6 +175,7 @@ public class Ville extends javax.swing.JPanel {
                   
                     JOptionPane.showMessageDialog(null, "Failed to add new Ville.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                
             } else {
         
                 JOptionPane.showMessageDialog(null, "Ville name cannot be empty.", "Warning", JOptionPane.WARNING_MESSAGE);
