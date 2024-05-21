@@ -639,7 +639,14 @@ public class AddAppartement extends javax.swing.JPanel {
             if (component instanceof RoundedLabel) {
                 if(((RoundedLabel) component).isImgUpdated()){
                 System.out.println("Found a label with text: " +  ((RoundedLabel) component).getImagePath());
-                String newImgPath=copyImage( ((RoundedLabel) component).getImagePath());
+                 String newImgPath="";
+                if ( ((RoundedLabel) component).getImagePath().startsWith("/images/")){
+                    newImgPath=((RoundedLabel) component).getImagePath();
+                }else{
+                 newImgPath=copyImage( ((RoundedLabel) component).getImagePath());
+                }
+                
+                
                 PhotosTableHandler.insertPhoto(newImgPath, aprtId);
                 
                 }
@@ -745,7 +752,10 @@ public class AddAppartement extends javax.swing.JPanel {
                 if(imported) label.setImageUpdated(true);
                 String photoPath = photoData.getPath();
                 System.out.println("************ path to  : "+ photoPath + " *******************");
-                label.updateImage(photoPath, !imported);
+               boolean frmRc = photoPath.startsWith("/images/");
+
+
+                label.updateImage(photoPath, frmRc);
                
                 label.setPhotoData(photoData);
             }
